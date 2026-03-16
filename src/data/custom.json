@@ -1,0 +1,20 @@
+[
+  {
+    "id":"bm-example-1",
+    "cat":"Bookmarks",
+    "action":"[EDIT ME] Open your most-used site",
+    "mac":"(your shortcut)",
+    "win":"(your shortcut)",
+    "priority":2,
+    "notes":"Replace these entries with your own custom bookmark shortcuts"
+  },
+  {
+    "id":"bm-example-2",
+    "cat":"Bookmarks",
+    "action":"[EDIT ME] Open project management tool",
+    "mac":"(your shortcut)",
+    "win":"(your shortcut)",
+    "priority":2,
+    "notes":"Use the browser bookmark manager to assign custom shortcuts"
+  }
+]

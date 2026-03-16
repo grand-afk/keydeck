@@ -1,0 +1,34 @@
+[
+  {"id":"gw-shortcuts","cat":"General","action":"Show all keyboard shortcuts","mac":"⌘/","win":"Ctrl+/","priority":1,"context":"Docs · Sheets · Slides"},
+  {"id":"gw-find-replace","cat":"General","action":"Find & replace","mac":"⌘H","win":"Ctrl+H","priority":1,"context":"Docs · Sheets"},
+  {"id":"gw-link","cat":"General","action":"Insert or edit link","mac":"⌘K","win":"Ctrl+K","priority":2,"context":"Docs · Sheets · Slides"},
+  {"id":"gw-comment","cat":"General","action":"Add comment","mac":"⌘⌥M","win":"Ctrl+Alt+M","priority":2,"context":"Docs · Sheets · Slides"},
+  {"id":"gw-undo","cat":"General","action":"Undo","mac":"⌘Z","win":"Ctrl+Z","priority":1,"context":"Docs · Sheets · Slides"},
+  {"id":"gw-redo","cat":"General","action":"Redo","mac":"⌘⇧Z","win":"Ctrl+Shift+Z","priority":1,"context":"Docs · Sheets · Slides"},
+  {"id":"gw-bold","cat":"General","action":"Bold","mac":"⌘B","win":"Ctrl+B","priority":1,"context":"Docs · Sheets · Slides"},
+  {"id":"gw-italic","cat":"General","action":"Italic","mac":"⌘I","win":"Ctrl+I","priority":1,"context":"Docs · Sheets · Slides"},
+  {"id":"gw-underline","cat":"General","action":"Underline","mac":"⌘U","win":"Ctrl+U","priority":1,"context":"Docs · Sheets · Slides"},
+
+  {"id":"gd-h1","cat":"Docs — Headings","action":"Apply Heading 1","mac":"⌘⌥1","win":"Ctrl+Alt+1","priority":2,"context":"Docs"},
+  {"id":"gd-h2","cat":"Docs — Headings","action":"Apply Heading 2","mac":"⌘⌥2","win":"Ctrl+Alt+2","priority":2,"context":"Docs"},
+  {"id":"gd-h3","cat":"Docs — Headings","action":"Apply Heading 3","mac":"⌘⌥3","win":"Ctrl+Alt+3","priority":2,"context":"Docs"},
+  {"id":"gd-normal","cat":"Docs — Headings","action":"Apply Normal text style","mac":"⌘⌥0","win":"Ctrl+Alt+0","priority":2,"context":"Docs"},
+  {"id":"gd-indent","cat":"Docs — Editing","action":"Increase indent","mac":"⌘]","win":"Ctrl+]","priority":2,"context":"Docs"},
+  {"id":"gd-outdent","cat":"Docs — Editing","action":"Decrease indent","mac":"⌘[","win":"Ctrl+[","priority":2,"context":"Docs"},
+  {"id":"gd-word-count","cat":"Docs — Tools","action":"Word count","mac":"⌘⇧C","win":"Ctrl+Shift+C","priority":3,"context":"Docs"},
+  {"id":"gd-pageless","cat":"Docs — View","action":"Switch to pageless / paginated view","mac":"(View menu)","win":"(View menu)","priority":3,"context":"Docs"},
+  {"id":"gd-outline","cat":"Docs — View","action":"Show / hide document outline","mac":"⌃⌘A","win":"Ctrl+Alt+A","priority":3,"context":"Docs"},
+
+  {"id":"gs-sel-col","cat":"Sheets — Selection","action":"Select entire column","mac":"⌃Space","win":"Ctrl+Space","priority":2,"context":"Sheets"},
+  {"id":"gs-sel-row","cat":"Sheets — Selection","action":"Select entire row","mac":"⇧Space","win":"Shift+Space","priority":2,"context":"Sheets"},
+  {"id":"gs-fill-down","cat":"Sheets — Edit","action":"Fill down","mac":"⌃D","win":"Ctrl+D","priority":2,"context":"Sheets"},
+  {"id":"gs-fill-right","cat":"Sheets — Edit","action":"Fill right","mac":"⌃R","win":"Ctrl+R","priority":2,"context":"Sheets"},
+  {"id":"gs-paste-values","cat":"Sheets — Edit","action":"Paste values only","mac":"⌘⇧V","win":"Ctrl+Shift+V","priority":2,"context":"Sheets"},
+  {"id":"gs-insert-row","cat":"Sheets — Edit","action":"Insert rows above (sequence)","mac":"⌘⌥I then R","win":"Ctrl+Alt+I then R","priority":2,"context":"Sheets","isSequence":true},
+  {"id":"gs-array-formula","cat":"Sheets — Formulas","action":"Insert ArrayFormula","mac":"⌘⇧Return","win":"Ctrl+Shift+Enter","priority":3,"context":"Sheets"},
+  {"id":"gs-next-sheet","cat":"Sheets — Navigation","action":"Move to next sheet tab","mac":"⌥↓","win":"Alt+↓ (or right-click)","priority":2,"context":"Sheets"},
+
+  {"id":"gsl-start","cat":"Slides — Present","action":"Start presentation","mac":"⌘Return","win":"Ctrl+Return","priority":1,"context":"Slides"},
+  {"id":"gsl-new-slide","cat":"Slides — Slides","action":"New slide","mac":"⌘M","win":"Ctrl+M","priority":2,"context":"Slides"},
+  {"id":"gsl-dup-slide","cat":"Slides — Slides","action":"Duplicate slide","mac":"⌘D","win":"Ctrl+D","priority":2,"context":"Slides"}
+]
