@@ -3,16 +3,17 @@ import { QUALITY } from '../utils/sm2'
 import { APPS } from '../data/index'
 import EditModal from './EditModal'
 
-const DISCOVER_BATCH = 10
+const DAILY_LIMIT = 10
 
 /**
- * DiscoverView — tabular discovery session (request #11).
+ * StudyView — tabular daily practice session.
  *
- * Prioritises shortcuts the user has never seen (repetitions === 0).
- * Same table layout as StudyView with click-to-reveal shortcuts.
- * Rating a row adds it to the Practice deck automatically (SM-2 via rateCard).
+ * Shows up to 10 shortcuts that are due for review today in a table.
+ * Each row has:  App | Category | Function | Shortcut (click to reveal) | Rate
+ *
+ * Requests #2 and #11.
  */
-export default function DiscoverView({
+export default function StudyView({
   shortcuts,
   platform,
   progress,
@@ -20,28 +21,22 @@ export default function DiscoverView({
   toggleFavourite,
   toggleNeedsEdit,
 }) {
-  const [revealed,    setReveal]    = useState({})
-  const [rated,       setRated]     = useState({})
-  const [editTarget,  setEditTarget] = useState(null)
-  const [batchSeed,   setBatchSeed]  = useState(0)   // increment to reshuffle
+  // Track which rows have been revealed and which have been rated
+  const [revealed, setReveal] = useState({})     // { [id]: true }
+  const [rated,    setRated]  = useState({})     // { [id]: 'again'|'hard'|'good'|'easy' }
+  const [editTarget, setEditTarget] = useState(null)
+  const [sessionDone, setSessionDone] = useState(false)
 
-  // Pick DISCOVER_BATCH unseen shortcuts (or random if all seen)
-  const batch = useMemo(() => {
-    const unseen = shortcuts.filter(
-      (s) => !progress[s.id] || progress[s.id].repetitions === 0,
-    )
-    const pool = unseen.length >= DISCOVER_BATCH
-      ? unseen
-      : [...shortcuts].sort(() => Math.random() - 0.5)
-
-    // Stable shuffle using batchSeed so the batch doesn't change on re-render
-    const seeded = [...pool].sort(() => {
-      const x = Math.sin(batchSeed + pool.indexOf(pool[0])) * 10000
-      return x - Math.floor(x) - 0.5
+  // Pick up to DAILY_LIMIT shortcuts that are due
+  const dueCards = useMemo(() => {
+    const now = new Date()
+    const due = shortcuts.filter((s) => {
+      const card = progress[s.id]
+      if (!card || card.repetitions === 0) return true           // new
+      return new Date(card.nextReview) <= now                    // overdue
     })
-    return seeded.slice(0, DISCOVER_BATCH)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shortcuts, progress, batchSeed])
+    return due.slice(0, DAILY_LIMIT)
+  }, [shortcuts, progress])
 
   const totalRated = Object.keys(rated).length
 
@@ -50,21 +45,22 @@ export default function DiscoverView({
   }
 
   function handleRate(id, quality, label) {
-    rateCard(id, quality)     // adds it to practice deck via SM-2
+    rateCard(id, quality)
     setRated((prev) => ({ ...prev, [id]: label }))
   }
 
-  function nextBatch() {
+  function startNextBatch() {
     setReveal({})
     setRated({})
-    setBatchSeed((n) => n + 1)
+    setSessionDone(false)
   }
 
-  if (shortcuts.length === 0) {
+  if (dueCards.length === 0) {
     return (
       <div className="empty-state">
-        <p className="empty-icon">🎲</p>
-        <p>No shortcuts to discover with the current filter.</p>
+        <p className="empty-icon">🎉</p>
+        <h2>All caught up!</h2>
+        <p>No shortcuts due for review today. Come back tomorrow.</p>
       </div>
     )
   }
@@ -72,15 +68,11 @@ export default function DiscoverView({
   return (
     <div className="study-view">
       <div className="study-header">
-        <h2 className="study-title">🎲 Discover Shortcuts</h2>
+        <h2 className="study-title">📋 Today's Study Session</h2>
         <span className="study-progress">
-          {totalRated} / {batch.length} rated
+          {totalRated} / {dueCards.length} rated
         </span>
       </div>
-
-      <p className="discover-hint">
-        Rate each shortcut to add it to your Practice deck. Prioritising shortcuts you haven't seen yet.
-      </p>
 
       <div className="study-table-wrapper">
         <table className="study-table">
@@ -95,7 +87,7 @@ export default function DiscoverView({
             </tr>
           </thead>
           <tbody>
-            {batch.map((s) => {
+            {dueCards.map((s) => {
               const appMeta      = APPS.find((a) => a.id === s.app) || {}
               const shortcutText = platform === 'mac' ? s.mac : s.win
               const isRevealed   = !!revealed[s.id]
@@ -109,21 +101,34 @@ export default function DiscoverView({
                   key={s.id}
                   className={`study-row ${ratingLabel ? `study-row--${ratingLabel}` : ''}`}
                 >
+                  {/* App */}
                   <td className="study-cell study-cell--app">
                     <span title={appMeta.label}>{appMeta.icon}</span>
                     <span className="study-app-label">{appMeta.label}</span>
                   </td>
+
+                  {/* Category */}
                   <td className="study-cell study-cell--cat">{s.cat}</td>
+
+                  {/* Function */}
                   <td className="study-cell study-cell--action">{s.action}</td>
+
+                  {/* Shortcut — click to reveal */}
                   <td className="study-cell study-cell--shortcut">
                     {isRevealed ? (
                       <kbd className="shortcut-badge">{shortcutText}</kbd>
                     ) : (
-                      <button className="reveal-btn" onClick={() => reveal(s.id)}>
+                      <button
+                        className="reveal-btn"
+                        onClick={() => reveal(s.id)}
+                        title="Click to reveal shortcut"
+                      >
                         Reveal ▶
                       </button>
                     )}
                   </td>
+
+                  {/* Rate buttons — only shown after reveal */}
                   <td className="study-cell study-cell--rate">
                     {ratingLabel ? (
                       <span className={`rating-badge rating-badge--${ratingLabel}`}>
@@ -140,10 +145,24 @@ export default function DiscoverView({
                       <span className="study-cell--pending">—</span>
                     )}
                   </td>
+
+                  {/* Action icons */}
                   <td className="study-cell study-cell--icons">
-                    <button className={`row-icon-btn ${isFavourite ? 'row-icon-btn--on' : ''}`} onClick={() => toggleFavourite?.(s.id)} title="Toggle favourite">⭐</button>
-                    <button className={`row-icon-btn ${flagged ? 'row-icon-btn--warn' : ''}`}  onClick={() => toggleNeedsEdit?.(s.id)}  title="Flag for editing">🚩</button>
-                    <button className="row-icon-btn" onClick={() => setEditTarget(s)} title="Edit shortcut">🖊️</button>
+                    <button
+                      className={`row-icon-btn ${isFavourite ? 'row-icon-btn--on' : ''}`}
+                      onClick={() => toggleFavourite?.(s.id)}
+                      title={isFavourite ? 'Unfavourite' : 'Favourite'}
+                    >⭐</button>
+                    <button
+                      className={`row-icon-btn ${flagged ? 'row-icon-btn--warn' : ''}`}
+                      onClick={() => toggleNeedsEdit?.(s.id)}
+                      title={flagged ? 'Remove edit flag' : 'Flag for editing'}
+                    >🚩</button>
+                    <button
+                      className="row-icon-btn"
+                      onClick={() => setEditTarget(s)}
+                      title="Edit shortcut"
+                    >🖊️</button>
                   </td>
                 </tr>
               )
@@ -152,14 +171,20 @@ export default function DiscoverView({
         </table>
       </div>
 
-      <div className="study-complete">
-        <button className="btn-secondary" onClick={nextBatch}>
-          🔀 New batch
-        </button>
-      </div>
+      {totalRated === dueCards.length && (
+        <div className="study-complete">
+          <p>✅ Session complete! All {dueCards.length} shortcuts rated.</p>
+          <button className="btn-primary" onClick={startNextBatch}>
+            Next batch →
+          </button>
+        </div>
+      )}
 
       {editTarget && (
-        <EditModal shortcut={editTarget} onClose={() => setEditTarget(null)} />
+        <EditModal
+          shortcut={editTarget}
+          onClose={() => setEditTarget(null)}
+        />
       )}
     </div>
   )

@@ -23,6 +23,11 @@ function saveProgress(data) {
 /**
  * Manages SM-2 card state for every shortcut.
  * Progress is persisted to localStorage under the key "keydeck:progress".
+ *
+ * Each card entry may include:
+ *   { repetitions, interval, easeFactor, nextReview,   ← SM-2 fields
+ *     favourite: bool,                                  ← starred by user
+ *     needsEdit: bool }                                 ← flagged for correction
  */
 export function useProgress() {
   const [progress, setProgress] = useState(() => loadProgress())
@@ -45,6 +50,26 @@ export function useProgress() {
     },
     [],
   )
+
+  /** Toggle the ⭐ favourite flag on a shortcut. */
+  const toggleFavourite = useCallback((id) => {
+    setProgress((prev) => {
+      const current = prev[id] || defaultCardState()
+      const updated = { ...prev, [id]: { ...current, favourite: !current.favourite } }
+      saveProgress(updated)
+      return updated
+    })
+  }, [])
+
+  /** Toggle the 🚩 needs-edit flag on a shortcut. */
+  const toggleNeedsEdit = useCallback((id) => {
+    setProgress((prev) => {
+      const current = prev[id] || defaultCardState()
+      const updated = { ...prev, [id]: { ...current, needsEdit: !current.needsEdit } }
+      saveProgress(updated)
+      return updated
+    })
+  }, [])
 
   /** Reset all progress for a specific app (or all apps if appId is undefined). */
   const resetProgress = useCallback(
@@ -89,5 +114,68 @@ export function useProgress() {
     [progress],
   )
 
-  return { progress, getCard, rateCard, resetProgress, getStats }
+  /**
+   * Export ALL progress + overrides as a JSON blob the user can save.
+   * Also bundles the current overrides so nothing is lost.
+   */
+  const exportData = useCallback(() => {
+    try {
+      const overridesRaw = localStorage.getItem('keydeck:overrides')
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        progress,
+        overrides: overridesRaw ? JSON.parse(overridesRaw) : {},
+      }
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `keydeck-backup-${new Date().toISOString().slice(0, 10)}.json`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      console.error('Export failed', e)
+    }
+  }, [progress])
+
+  /**
+   * Import a previously exported JSON file.
+   * Merges (or replaces) progress and overrides.
+   */
+  const importData = useCallback((jsonText, mode = 'merge') => {
+    try {
+      const payload = JSON.parse(jsonText)
+      setProgress((prev) => {
+        const newProgress = mode === 'replace'
+          ? payload.progress
+          : { ...prev, ...payload.progress }
+        saveProgress(newProgress)
+        return newProgress
+      })
+      if (payload.overrides && Object.keys(payload.overrides).length > 0) {
+        const existingRaw = localStorage.getItem('keydeck:overrides')
+        const existing = existingRaw ? JSON.parse(existingRaw) : {}
+        const merged = mode === 'replace'
+          ? payload.overrides
+          : { ...existing, ...payload.overrides }
+        localStorage.setItem('keydeck:overrides', JSON.stringify(merged))
+      }
+      return true
+    } catch (e) {
+      console.error('Import failed', e)
+      return false
+    }
+  }, [])
+
+  return {
+    progress,
+    getCard,
+    rateCard,
+    resetProgress,
+    getStats,
+    toggleFavourite,
+    toggleNeedsEdit,
+    exportData,
+    importData,
+  }
 }

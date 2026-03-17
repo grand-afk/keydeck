@@ -1,25 +1,23 @@
-const NAV_ITEMS = [
-  { id: 'practice', label: 'Practice', icon: '🃏' },
-  { id: 'discover', label: 'Discover', icon: '🎲' },
-  { id: 'search',   label: 'Search',   icon: '🔍' },
-  { id: 'help',     label: 'Help',     icon: '📖' },
+const TABS = [
+  { id: 'practice', icon: '🃏', label: 'Practice'  },
+  { id: 'study',    icon: '📋', label: 'Study'     },
+  { id: 'discover', icon: '🎲', label: 'Discover'  },
+  { id: 'search',   icon: '🔍', label: 'Search'    },
+  { id: 'help',     icon: '📖', label: 'Help'      },
 ]
 
-/**
- * BottomNav — mobile-first tab bar
- */
 export default function BottomNav({ view, setView }) {
   return (
-    <nav className="bottom-nav" role="navigation" aria-label="Main navigation">
-      {NAV_ITEMS.map((item) => (
+    <nav className="bottom-nav" aria-label="Main navigation">
+      {TABS.map((tab) => (
         <button
-          key={item.id}
-          className={`nav-item ${view === item.id ? 'active' : ''}`}
-          onClick={() => setView(item.id)}
-          aria-current={view === item.id ? 'page' : undefined}
+          key={tab.id}
+          className={`nav-btn ${view === tab.id ? 'nav-btn--active' : ''}`}
+          onClick={() => setView(tab.id)}
+          aria-current={view === tab.id ? 'page' : undefined}
         >
-          <span className="nav-icon">{item.icon}</span>
-          <span className="nav-label">{item.label}</span>
+          <span className="nav-icon">{tab.icon}</span>
+          <span className="nav-label">{tab.label}</span>
         </button>
       ))}
     </nav>
