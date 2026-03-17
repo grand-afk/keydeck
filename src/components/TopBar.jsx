@@ -29,76 +29,50 @@ export default function TopBar({
     <header className="top-bar">
       {/* ── Row 1: platform toggle + utility buttons ── */}
       <div className="top-bar__controls">
-        {/* Mac / Win toggle */}
+        {/* Mac / Win toggle — kbd hints: M / W (#4) */}
         <div className="platform-toggle" role="group" aria-label="Platform">
           <button
             className={`platform-btn ${platform === 'mac' ? 'platform-btn--active' : ''}`}
             onClick={() => setPlatform('mac')}
             aria-pressed={platform === 'mac'}
+            title="Switch to Mac shortcuts [M]"
           >
-            🍎 Mac
+            🍎 Mac<kbd className="kbd-hint">M</kbd>
           </button>
           <button
             className={`platform-btn ${platform === 'win' ? 'platform-btn--active' : ''}`}
             onClick={() => setPlatform('win')}
             aria-pressed={platform === 'win'}
+            title="Switch to Windows shortcuts [W]"
           >
-            ⊞ Win
+            ⊞ Win<kbd className="kbd-hint">W</kbd>
           </button>
         </div>
 
         <div className="top-bar__actions">
-          {/* Favourites filter */}
           <button
             className={`icon-btn ${showFavourites ? 'icon-btn--active' : ''}`}
             onClick={toggleShowFavourites}
-            title={showFavourites ? 'Showing favourites only — click to show all' : 'Show favourites only'}
+            title="Toggle favourites filter [F]"
             aria-pressed={showFavourites}
           >
-            ⭐
+            ⭐<kbd className="kbd-hint">F</kbd>
           </button>
-
-          {/* Export */}
-          <button
-            className="icon-btn"
-            onClick={onExport}
-            title="Export progress & overrides as JSON"
-          >
-            ⬇️
+          <button className="icon-btn" onClick={onExport} title="Export data [E]">
+            ⬇️<kbd className="kbd-hint">E</kbd>
           </button>
-
-          {/* Import */}
-          <button
-            className="icon-btn"
-            onClick={() => importRef.current?.click()}
-            title="Import a previously exported JSON backup"
-          >
+          <button className="icon-btn" onClick={() => importRef.current?.click()} title="Import backup">
             ⬆️
           </button>
-          <input
-            ref={importRef}
-            type="file"
-            accept=".json"
-            style={{ display: 'none' }}
-            onChange={handleImportFile}
-          />
+          <input ref={importRef} type="file" accept=".json" style={{ display: 'none' }} onChange={handleImportFile} />
         </div>
       </div>
 
-      {/* ── Row 2: app filter chips (wrappable) ── */}
+      {/* ── Row 2: app filter chips ── */}
       <div className="app-filters" role="group" aria-label="Filter by app">
         <button
           className={`app-chip ${selectedApps.length === 0 ? 'app-chip--active' : ''}`}
-          onClick={() => {
-            // Deselect all — handled by passing empty array upstream
-            // We fire toggleApp for each selected to clear, or use a dedicated clearApps.
-            // Simplest: just rely on parent clearing via setSelectedApps([]).
-            // Since we only have toggleApp, clicking 'All' when something is selected
-            // should clear. We implement a small workaround here:
-            if (selectedApps.length > 0) {
-              selectedApps.forEach((id) => toggleApp(id))
-            }
-          }}
+          onClick={() => { if (selectedApps.length > 0) selectedApps.forEach((id) => toggleApp(id)) }}
         >
           All
         </button>

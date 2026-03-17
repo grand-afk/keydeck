@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 const SETTINGS_KEY = 'keydeck:settings'
 
@@ -19,8 +19,28 @@ function saveSettings(data) {
   }
 }
 
+// ── URL sync for platform (#1) — ?p=mac or ?p=win ─────────────────────────
+function getPlatformFromUrl() {
+  try {
+    return new URLSearchParams(window.location.search).get('p') || null
+  } catch { return null }
+}
+
+function setPlatformInUrl(p) {
+  try {
+    const url = new URL(window.location.href)
+    url.searchParams.set('p', p)
+    window.history.replaceState({}, '', url.toString())
+  } catch {}
+}
+
 export function useSettings() {
-  const [settings, setSettings] = useState(() => loadSettings())
+  const [settings, setSettings] = useState(() => {
+    const saved = loadSettings()
+    const urlPlatform = getPlatformFromUrl()
+    if (urlPlatform === 'mac' || urlPlatform === 'win') saved.platform = urlPlatform
+    return saved
+  })
 
   const update = useCallback((patch) => {
     setSettings((prev) => {
@@ -30,23 +50,21 @@ export function useSettings() {
     })
   }, [])
 
-  const platform      = settings.platform      ?? 'mac'
-  const selectedApps  = settings.selectedApps  ?? []
-  const showFavourites = settings.showFavourites ?? false
+  const platform       = settings.platform       ?? 'mac'
+  const selectedApps   = settings.selectedApps   ?? []
+  const showFavourites = settings.showFavourites  ?? false
 
-  const setPlatform = useCallback(
-    (p) => update({ platform: p }),
-    [update],
-  )
+  // Keep URL param in sync
+  useEffect(() => { setPlatformInUrl(platform) }, [platform])
+
+  const setPlatform = useCallback((p) => update({ platform: p }), [update])
 
   const toggleApp = useCallback(
-    (appId) => {
-      update({
-        selectedApps: selectedApps.includes(appId)
-          ? selectedApps.filter((a) => a !== appId)
-          : [...selectedApps, appId],
-      })
-    },
+    (appId) => update({
+      selectedApps: selectedApps.includes(appId)
+        ? selectedApps.filter((a) => a !== appId)
+        : [...selectedApps, appId],
+    }),
     [selectedApps, update],
   )
 
@@ -55,12 +73,5 @@ export function useSettings() {
     [showFavourites, update],
   )
 
-  return {
-    platform,
-    setPlatform,
-    selectedApps,
-    toggleApp,
-    showFavourites,
-    toggleShowFavourites,
-  }
+  return { platform, setPlatform, selectedApps, toggleApp, showFavourites, toggleShowFavourites }
 }

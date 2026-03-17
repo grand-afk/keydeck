@@ -758,3 +758,134 @@ body {
 @media (max-width: 360px) {
   .study-cell--icons { display: none; }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   NEW ADDITIONS — batch 2
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Keyboard shortcut hints (#4) ── */
+/* Shown on desktop/iPad, hidden on phone */
+.kbd-hint {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 0.6rem;
+  padding: 1px 4px;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+  opacity: 0.55;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  vertical-align: middle;
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .kbd-hint { display: none; }
+}
+
+/* ── Stats row spacing fix (#2) ── */
+.queue-stats {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.queue-badge {
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.queue-new      { background: var(--easy);   color: #fff; }
+.queue-learning { background: var(--hard);   color: #fff; }
+.queue-review   { background: var(--accent); color: #fff; }
+
+.queue-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.queue-remaining { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ── Sortable column headers (#5) ── */
+.sortable-th {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.sortable-th:hover { color: var(--accent-hover); }
+.sortable-th--active { color: var(--accent-hover); }
+.sort-arrow { font-size: 0.7rem; opacity: 0.7; }
+
+/* ── Shortcuts view header ── */
+.shortcuts-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Toggle button (fav filter inside ShortcutsView) */
+.btn-toggle {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-toggle:hover { background: var(--surface2); color: var(--text); }
+.btn-toggle--on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ── Pagination (#6) ── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 0 4px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.page-btn:hover:not(:disabled) { background: var(--surface2); color: var(--text); }
+.page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.page-numbers { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+
+.page-num {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.page-num:hover { background: var(--surface2); color: var(--text); }
+.page-num--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
