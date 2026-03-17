@@ -23,25 +23,28 @@ export default function DiscoverView({
   const [revealed,    setReveal]    = useState({})
   const [rated,       setRated]     = useState({})
   const [editTarget,  setEditTarget] = useState(null)
-  const [batchSeed,   setBatchSeed]  = useState(0)   // increment to reshuffle
+  const [batch,       setBatch]     = useState(null)   // null = needs (re)generate
 
-  // Pick DISCOVER_BATCH unseen shortcuts (or random if all seen)
-  const batch = useMemo(() => {
+  // Fisher-Yates shuffle — produces a genuinely random order every call
+  function shuffle(arr) {
+    const a = [...arr]
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]]
+    }
+    return a
+  }
+
+  // Compute a fresh batch; called on mount and each "New batch" press
+  const currentBatch = useMemo(() => {
+    if (batch !== null) return batch   // already generated — keep stable
     const unseen = shortcuts.filter(
       (s) => !progress[s.id] || progress[s.id].repetitions === 0,
     )
-    const pool = unseen.length >= DISCOVER_BATCH
-      ? unseen
-      : [...shortcuts].sort(() => Math.random() - 0.5)
-
-    // Stable shuffle using batchSeed so the batch doesn't change on re-render
-    const seeded = [...pool].sort(() => {
-      const x = Math.sin(batchSeed + pool.indexOf(pool[0])) * 10000
-      return x - Math.floor(x) - 0.5
-    })
-    return seeded.slice(0, DISCOVER_BATCH)
+    const pool = unseen.length >= DISCOVER_BATCH ? unseen : shortcuts
+    return shuffle(pool).slice(0, DISCOVER_BATCH)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shortcuts, progress, batchSeed])
+  }, [batch, shortcuts, progress])
 
   const totalRated = Object.keys(rated).length
 
@@ -55,9 +58,14 @@ export default function DiscoverView({
   }
 
   function nextBatch() {
+    const unseen = shortcuts.filter(
+      (s) => !progress[s.id] || progress[s.id].repetitions === 0,
+    )
+    const pool = unseen.length >= DISCOVER_BATCH ? unseen : shortcuts
+    const next = shuffle(pool).slice(0, DISCOVER_BATCH)
+    setBatch(next)
     setReveal({})
     setRated({})
-    setBatchSeed((n) => n + 1)
   }
 
   if (shortcuts.length === 0) {
@@ -74,7 +82,7 @@ export default function DiscoverView({
       <div className="study-header">
         <h2 className="study-title">🎲 Discover Shortcuts</h2>
         <span className="study-progress">
-          {totalRated} / {batch.length} rated
+          {totalRated} / {currentBatch.length} rated
         </span>
       </div>
 
@@ -95,7 +103,7 @@ export default function DiscoverView({
             </tr>
           </thead>
           <tbody>
-            {batch.map((s) => {
+            {currentBatch.map((s) => {
               const appMeta      = APPS.find((a) => a.id === s.app) || {}
               const shortcutText = platform === 'mac' ? s.mac : s.win
               const isRevealed   = !!revealed[s.id]

@@ -1,0 +1,24 @@
+[
+  { "id": "gcal-new-event",      "cat": "Events",     "action": "Create new event",               "mac": "C",           "win": "C",             "priority": 1 },
+  { "id": "gcal-new-task",       "cat": "Events",     "action": "Create new task",                "mac": "T",           "win": "T",             "priority": 2 },
+  { "id": "gcal-new-reminder",   "cat": "Events",     "action": "Create new reminder",            "mac": "R",           "win": "R",             "priority": 3 },
+  { "id": "gcal-edit-event",     "cat": "Events",     "action": "Edit selected event",            "mac": "E",           "win": "E",             "priority": 2 },
+  { "id": "gcal-delete-event",   "cat": "Events",     "action": "Delete selected event",          "mac": "⌫",           "win": "Delete",        "priority": 2 },
+  { "id": "gcal-save-event",     "cat": "Events",     "action": "Save event",                     "mac": "⌘S",          "win": "Ctrl+S",        "priority": 1 },
+  { "id": "gcal-open-event",     "cat": "Events",     "action": "Open event detail",              "mac": "Return",      "win": "Enter",         "priority": 2 },
+  { "id": "gcal-undo",           "cat": "Events",     "action": "Undo last action",               "mac": "⌘Z",          "win": "Ctrl+Z",        "priority": 2 },
+
+  { "id": "gcal-today",          "cat": "Navigation", "action": "Go to today",                    "mac": "T",           "win": "T",             "priority": 1 },
+  { "id": "gcal-next",           "cat": "Navigation", "action": "Go to next period",              "mac": "→ or N",      "win": "→ or N",        "priority": 1 },
+  { "id": "gcal-prev",           "cat": "Navigation", "action": "Go to previous period",          "mac": "← or P",      "win": "← or P",        "priority": 1 },
+  { "id": "gcal-search",         "cat": "Navigation", "action": "Search",                         "mac": "/",           "win": "/",             "priority": 1 },
+
+  { "id": "gcal-day",            "cat": "Views",      "action": "Day view",                       "mac": "D or 1",      "win": "D or 1",        "priority": 1 },
+  { "id": "gcal-week",           "cat": "Views",      "action": "Week view",                      "mac": "W or 2",      "win": "W or 2",        "priority": 1 },
+  { "id": "gcal-month",          "cat": "Views",      "action": "Month view",                     "mac": "M or 3",      "win": "M or 3",        "priority": 1 },
+  { "id": "gcal-year",           "cat": "Views",      "action": "Year view",                      "mac": "Y or 6",      "win": "Y or 6",        "priority": 2 },
+  { "id": "gcal-schedule",       "cat": "Views",      "action": "Schedule view",                  "mac": "A or 4",      "win": "A or 4",        "priority": 2 },
+  { "id": "gcal-4day",           "cat": "Views",      "action": "4-day view",                     "mac": "X or 5",      "win": "X or 5",        "priority": 3 },
+
+  { "id": "gcal-shortcuts",      "cat": "General",    "action": "Show keyboard shortcut help",    "mac": "?",           "win": "?",             "priority": 2 }
+]

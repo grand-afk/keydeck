@@ -1,0 +1,19 @@
+[
+  { "id": "gchat-search",        "cat": "Navigation", "action": "Search in Chat",                 "mac": "⌘F",          "win": "Ctrl+F",        "priority": 1 },
+  { "id": "gchat-new-dm",        "cat": "Navigation", "action": "Start new direct message",       "mac": "⌘N",          "win": "Ctrl+N",        "priority": 1 },
+  { "id": "gchat-next-space",    "cat": "Navigation", "action": "Move to next space / DM",        "mac": "⌘]",          "win": "Ctrl+]",        "priority": 2 },
+  { "id": "gchat-prev-space",    "cat": "Navigation", "action": "Move to previous space / DM",    "mac": "⌘[",          "win": "Ctrl+[",        "priority": 2 },
+  { "id": "gchat-mark-read",     "cat": "Navigation", "action": "Mark current space as read",     "mac": "⇧Esc",        "win": "Shift+Esc",     "priority": 2 },
+
+  { "id": "gchat-send",          "cat": "Messaging",  "action": "Send message",                   "mac": "Return",      "win": "Enter",         "priority": 1 },
+  { "id": "gchat-newline",       "cat": "Messaging",  "action": "New line (without sending)",     "mac": "⇧Return",     "win": "Shift+Enter",   "priority": 1 },
+  { "id": "gchat-edit-last",     "cat": "Messaging",  "action": "Edit last sent message",         "mac": "↑",           "win": "↑",             "priority": 2 },
+  { "id": "gchat-react",         "cat": "Messaging",  "action": "Add emoji reaction",             "mac": "⌘⇧J",         "win": "Ctrl+Shift+J",  "priority": 3 },
+  { "id": "gchat-attach",        "cat": "Messaging",  "action": "Attach file",                    "mac": "⌘⇧U",         "win": "Ctrl+Shift+U",  "priority": 2 },
+
+  { "id": "gchat-bold",          "cat": "Formatting", "action": "Bold",                           "mac": "⌘B",          "win": "Ctrl+B",        "priority": 1 },
+  { "id": "gchat-italic",        "cat": "Formatting", "action": "Italic",                         "mac": "⌘I",          "win": "Ctrl+I",        "priority": 1 },
+  { "id": "gchat-strikethrough", "cat": "Formatting", "action": "Strikethrough",                  "mac": "⌘⇧X",         "win": "Ctrl+Shift+X",  "priority": 2 },
+  { "id": "gchat-code",          "cat": "Formatting", "action": "Inline code",                    "mac": "⌘⌥C",         "win": "Ctrl+Alt+C",    "priority": 2 },
+  { "id": "gchat-code-block",    "cat": "Formatting", "action": "Code block",                     "mac": "⌘⌥⇧C",        "win": "Ctrl+Alt+Shift+C", "priority": 3 }
+]

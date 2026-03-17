@@ -81,8 +81,9 @@ export default function TopBar({
             key={app.id}
             className={`app-chip ${selectedApps.includes(app.id) ? 'app-chip--active' : ''}`}
             onClick={() => toggleApp(app.id)}
+            title={`Filter by ${app.label}${app.key ? ` [${app.key}]` : ''}`}
           >
-            {app.icon} {app.label}
+            {app.icon} {app.label}{app.key && <kbd className="kbd-hint">{app.key}</kbd>}
           </button>
         ))}
       </div>

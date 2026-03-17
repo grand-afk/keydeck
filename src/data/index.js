@@ -1,6 +1,10 @@
 import excel        from './excel.json'
 import powerpoint   from './powerpoint.json'
 import googleWs     from './google-workspace.json'
+import gmail        from './gmail.json'
+import googleChat   from './google-chat.json'
+import googleCal    from './google-calendar.json'
+import googleTasks  from './google-tasks.json'
 import windows      from './windows.json'
 import slack        from './slack.json'
 import vimium       from './vimium.json'
@@ -10,15 +14,19 @@ import custom       from './custom.json'
 
 // ─── App metadata ──────────────────────────────────────────────────────────
 export const APPS = [
-  { id: 'excel',             icon: '📊', label: 'Excel'           },
-  { id: 'powerpoint',        icon: '📽️', label: 'PowerPoint'     },
-  { id: 'google-workspace',  icon: '🔵', label: 'Google'          },
-  { id: 'windows',           icon: '🖥️', label: 'Desktop'        },
-  { id: 'slack',             icon: '💬', label: 'Slack'           },
-  { id: 'vimium',            icon: '🌐', label: 'Vimium'          },
-  { id: 'obsidian',          icon: '🔮', label: 'Obsidian'        },
-  { id: 'chrome',            icon: '🟡', label: 'Chrome'          },
-  { id: 'custom',            icon: '🔖', label: 'Bookmarks'       },
+  { id: 'excel',           icon: '📊', label: 'Excel',       key: 'X' },
+  { id: 'powerpoint',      icon: '📽️', label: 'PowerPoint',  key: 'P' },
+  { id: 'google-workspace',icon: '📄', label: 'Workspace',   key: 'D' },
+  { id: 'gmail',           icon: '📧', label: 'Gmail',       key: 'G' },
+  { id: 'google-chat',     icon: '🗨️', label: 'Chat',        key: 'C' },
+  { id: 'google-calendar', icon: '📅', label: 'Calendar',    key: 'A' },
+  { id: 'google-tasks',    icon: '✅', label: 'Tasks',       key: 'T' },
+  { id: 'windows',         icon: '🖥️', label: 'Desktop',     key: 'N' },
+  { id: 'slack',           icon: '💬', label: 'Slack',       key: 'K' },
+  { id: 'vimium',          icon: '🌐', label: 'Vimium',      key: 'V' },
+  { id: 'obsidian',        icon: '🔮', label: 'Obsidian',    key: 'O' },
+  { id: 'chrome',          icon: '🟡', label: 'Chrome',      key: 'R' },
+  { id: 'custom',          icon: '🔖', label: 'Bookmarks',   key: 'B' },
 ]
 
 // ─── Tag each shortcut with its app id ─────────────────────────────────────
@@ -28,6 +36,10 @@ const ALL_SHORTCUTS = [
   ...tag('excel',            excel),
   ...tag('powerpoint',       powerpoint),
   ...tag('google-workspace', googleWs),
+  ...tag('gmail',            gmail),
+  ...tag('google-chat',      googleChat),
+  ...tag('google-calendar',  googleCal),
+  ...tag('google-tasks',     googleTasks),
   ...tag('windows',          windows),
   ...tag('slack',            slack),
   ...tag('vimium',           vimium),

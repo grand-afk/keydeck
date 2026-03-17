@@ -1,0 +1,17 @@
+[
+  { "id": "gtasks-add",          "cat": "Tasks",      "action": "Add new task",                   "mac": "⌘Return",     "win": "Ctrl+Enter",    "priority": 1 },
+  { "id": "gtasks-complete",     "cat": "Tasks",      "action": "Mark task as complete",          "mac": "⇧Return",     "win": "Shift+Enter",   "priority": 1 },
+  { "id": "gtasks-edit",         "cat": "Tasks",      "action": "Edit selected task",             "mac": "Return",      "win": "Enter",         "priority": 1 },
+  { "id": "gtasks-delete",       "cat": "Tasks",      "action": "Delete selected task",           "mac": "⌘⌫",          "win": "Ctrl+Delete",   "priority": 2 },
+  { "id": "gtasks-indent",       "cat": "Tasks",      "action": "Indent task (make subtask)",     "mac": "Tab",         "win": "Tab",           "priority": 2 },
+  { "id": "gtasks-unindent",     "cat": "Tasks",      "action": "Unindent task",                  "mac": "⇧Tab",        "win": "Shift+Tab",     "priority": 2 },
+  { "id": "gtasks-move-up",      "cat": "Tasks",      "action": "Move task up",                   "mac": "⌘↑",          "win": "Ctrl+↑",        "priority": 2 },
+  { "id": "gtasks-move-down",    "cat": "Tasks",      "action": "Move task down",                 "mac": "⌘↓",          "win": "Ctrl+↓",        "priority": 2 },
+  { "id": "gtasks-undo",         "cat": "Tasks",      "action": "Undo",                           "mac": "⌘Z",          "win": "Ctrl+Z",        "priority": 2 },
+
+  { "id": "gtasks-next",         "cat": "Navigation", "action": "Next task",                      "mac": "↓",           "win": "↓",             "priority": 1 },
+  { "id": "gtasks-prev",         "cat": "Navigation", "action": "Previous task",                  "mac": "↑",           "win": "↑",             "priority": 1 },
+  { "id": "gtasks-expand",       "cat": "Navigation", "action": "Expand / collapse subtasks",     "mac": "→ / ←",       "win": "→ / ←",         "priority": 2 },
+  { "id": "gtasks-list-next",    "cat": "Navigation", "action": "Switch to next list",            "mac": "⌘→",          "win": "Ctrl+→",        "priority": 2 },
+  { "id": "gtasks-list-prev",    "cat": "Navigation", "action": "Switch to previous list",        "mac": "⌘←",          "win": "Ctrl+←",        "priority": 2 }
+]

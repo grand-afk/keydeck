@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getShortcuts } from './data/index'
+import { getShortcuts, APPS } from './data/index'
 import { useProgress } from './hooks/useProgress'
 import { useSettings } from './hooks/useSettings'
 import TopBar from './components/TopBar'
@@ -42,6 +42,13 @@ export default function App() {
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
       if (e.metaKey || e.ctrlKey || e.altKey) return
 
+      // App filter keyboard shortcuts — derived from APPS[].key
+      const appByKey = APPS.find((a) => a.key === e.key.toUpperCase())
+      if (appByKey) {
+        toggleApp(appByKey.id)
+        return
+      }
+
       switch (e.key) {
         case 'm': case 'M': setPlatform('mac'); break
         case 'w': case 'W': setPlatform('win'); break
@@ -57,7 +64,7 @@ export default function App() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [setPlatform, toggleShowFavourites, exportData])
+  }, [setPlatform, toggleShowFavourites, exportData, toggleApp])
 
   return (
     <div className="app">
@@ -109,7 +116,7 @@ export default function App() {
             shortcuts={shortcuts}
             platform={platform}
             progress={progress}
-            getCard={getCard}
+            rateCard={rateCard}
             toggleFavourite={toggleFavourite}
             toggleNeedsEdit={toggleNeedsEdit}
           />

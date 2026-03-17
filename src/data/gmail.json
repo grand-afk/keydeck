@@ -1,0 +1,39 @@
+[
+  { "id": "gmail-compose",       "cat": "Email",      "action": "Compose new email",              "mac": "C",           "win": "C",             "priority": 1 },
+  { "id": "gmail-reply",         "cat": "Email",      "action": "Reply",                          "mac": "R",           "win": "R",             "priority": 1 },
+  { "id": "gmail-reply-all",     "cat": "Email",      "action": "Reply all",                      "mac": "A",           "win": "A",             "priority": 1 },
+  { "id": "gmail-forward",       "cat": "Email",      "action": "Forward",                        "mac": "F",           "win": "F",             "priority": 1 },
+  { "id": "gmail-send",          "cat": "Email",      "action": "Send email",                     "mac": "⌘Return",     "win": "Ctrl+Enter",    "priority": 1 },
+  { "id": "gmail-archive",       "cat": "Email",      "action": "Archive",                        "mac": "E",           "win": "E",             "priority": 1 },
+  { "id": "gmail-delete",        "cat": "Email",      "action": "Delete",                         "mac": "#",           "win": "#",             "priority": 2 },
+  { "id": "gmail-star",          "cat": "Email",      "action": "Star / unstar",                  "mac": "S",           "win": "S",             "priority": 2 },
+  { "id": "gmail-snooze",        "cat": "Email",      "action": "Snooze",                         "mac": "B",           "win": "B",             "priority": 2 },
+  { "id": "gmail-mark-unread",   "cat": "Email",      "action": "Mark as unread",                 "mac": "⇧U",          "win": "Shift+U",       "priority": 2 },
+  { "id": "gmail-mark-read",     "cat": "Email",      "action": "Mark as read",                   "mac": "⇧I",          "win": "Shift+I",       "priority": 2 },
+  { "id": "gmail-mute",          "cat": "Email",      "action": "Mute conversation",              "mac": "M",           "win": "M",             "priority": 3 },
+  { "id": "gmail-label",         "cat": "Email",      "action": "Label email",                    "mac": "L",           "win": "L",             "priority": 2 },
+  { "id": "gmail-spam",          "cat": "Email",      "action": "Report spam",                    "mac": "!",           "win": "!",             "priority": 3 },
+
+  { "id": "gmail-next",          "cat": "Navigation", "action": "Next email in list",             "mac": "J",           "win": "J",             "priority": 1 },
+  { "id": "gmail-prev",          "cat": "Navigation", "action": "Previous email in list",         "mac": "K",           "win": "K",             "priority": 1 },
+  { "id": "gmail-open",          "cat": "Navigation", "action": "Open / expand conversation",     "mac": "O or Return", "win": "O or Enter",    "priority": 1 },
+  { "id": "gmail-back",          "cat": "Navigation", "action": "Return to thread list",          "mac": "U",           "win": "U",             "priority": 2 },
+  { "id": "gmail-search",        "cat": "Navigation", "action": "Go to search",                   "mac": "/",           "win": "/",             "priority": 1 },
+  { "id": "gmail-inbox",         "cat": "Navigation", "action": "Go to Inbox",                    "mac": "G then I",    "win": "G then I",      "priority": 2, "isSequence": true },
+  { "id": "gmail-sent",          "cat": "Navigation", "action": "Go to Sent",                     "mac": "G then T",    "win": "G then T",      "priority": 2, "isSequence": true },
+  { "id": "gmail-drafts",        "cat": "Navigation", "action": "Go to Drafts",                   "mac": "G then D",    "win": "G then D",      "priority": 2, "isSequence": true },
+  { "id": "gmail-all-mail",      "cat": "Navigation", "action": "Go to All Mail",                 "mac": "G then A",    "win": "G then A",      "priority": 3, "isSequence": true },
+
+  { "id": "gmail-newer",         "cat": "Conversation","action": "Newer conversation",            "mac": "P",           "win": "P",             "priority": 2 },
+  { "id": "gmail-older",         "cat": "Conversation","action": "Older conversation",            "mac": "N",           "win": "N",             "priority": 2 },
+  { "id": "gmail-expand-all",    "cat": "Conversation","action": "Expand all messages",           "mac": "; ",          "win": ";",             "priority": 3 },
+  { "id": "gmail-collapse-all",  "cat": "Conversation","action": "Collapse all messages",         "mac": ":",           "win": ":",             "priority": 3 },
+
+  { "id": "gmail-select-all",    "cat": "Selection",  "action": "Select all conversations",      "mac": "* then A",    "win": "* then A",      "priority": 2, "isSequence": true },
+  { "id": "gmail-select-none",   "cat": "Selection",  "action": "Deselect all",                  "mac": "* then N",    "win": "* then N",      "priority": 3, "isSequence": true },
+  { "id": "gmail-select-read",   "cat": "Selection",  "action": "Select all read",               "mac": "* then R",    "win": "* then R",      "priority": 3, "isSequence": true },
+  { "id": "gmail-select-unread", "cat": "Selection",  "action": "Select all unread",             "mac": "* then U",    "win": "* then U",      "priority": 3, "isSequence": true },
+
+  { "id": "gmail-undo",          "cat": "General",    "action": "Undo last action",               "mac": "Z",           "win": "Z",             "priority": 2 },
+  { "id": "gmail-shortcuts",     "cat": "General",    "action": "Show keyboard shortcut help",    "mac": "?",           "win": "?",             "priority": 2 }
+]
