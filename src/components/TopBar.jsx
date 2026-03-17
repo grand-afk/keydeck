@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { APPS } from '../data/index'
+import AppIcon from './AppIcon'
 
 export default function TopBar({
   platform,
@@ -83,7 +84,7 @@ export default function TopBar({
             onClick={() => toggleApp(app.id)}
             title={`Filter by ${app.label}${app.key ? ` [${app.key}]` : ''}`}
           >
-            {app.icon} {app.label}{app.key && <kbd className="kbd-hint">{app.key}</kbd>}
+            <AppIcon app={app} /> {app.label}{app.key && <kbd className="kbd-hint">{app.key}</kbd>}
           </button>
         ))}
       </div>

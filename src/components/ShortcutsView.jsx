@@ -1,18 +1,20 @@
 import { useState, useMemo } from 'react'
 import { QUALITY } from '../utils/sm2'
 import { APPS } from '../data/index'
+import AppIcon from './AppIcon'
 import EditModal from './EditModal'
+import AddShortcutModal from './AddShortcutModal'
 
 const PAGE_SIZE = 10
 
 /**
- * ShortcutsView — paginated shortcut reference (#6).
+ * ShortcutsView — paginated shortcut reference (default view).
  *
- * • Favourites filter ON by default (toggleable within the view)
- * • Shows all shortcuts (not just due ones), 10 per page
+ * • Favourites filter is controlled globally via the TopBar ⭐ button
+ * • Shows all shortcuts passed in, 10 per page
  * • Sortable columns
  * • Rating buttons on each row (adds to SM-2 deck)
- * • This is the default view
+ * • + button to add a new custom shortcut
  */
 export default function ShortcutsView({
   shortcuts,
@@ -21,32 +23,28 @@ export default function ShortcutsView({
   rateCard,
   toggleFavourite,
   toggleNeedsEdit,
+  showFavourites,
+  toggleShowFavourites,
 }) {
-  const [showFavOnly, setShowFavOnly] = useState(true)   // favourites on by default
   const [page,        setPage]        = useState(1)
   const [sort,        setSort]        = useState({ key: null, dir: 'asc' })
   const [rated,       setRated]       = useState({})
   const [editTarget,  setEditTarget]  = useState(null)
-
-  // Filter
-  const filtered = useMemo(() => {
-    if (!showFavOnly) return shortcuts
-    return shortcuts.filter((s) => progress[s.id]?.favourite)
-  }, [shortcuts, progress, showFavOnly])
+  const [showAdd,     setShowAdd]     = useState(false)
 
   // Sort
   const sorted = useMemo(() => {
-    if (!sort.key) return filtered
-    return [...filtered].sort((a, b) => {
+    if (!sort.key) return shortcuts
+    return [...shortcuts].sort((a, b) => {
       let av = '', bv = ''
       if (sort.key === 'app')      { av = a.app;    bv = b.app }
       if (sort.key === 'cat')      { av = a.cat;    bv = b.cat }
       if (sort.key === 'action')   { av = a.action; bv = b.action }
       if (sort.key === 'shortcut') { av = platform === 'mac' ? a.mac : a.win; bv = platform === 'mac' ? b.mac : b.win }
-      const cmp = av.localeCompare(bv)
+      const cmp = (av || '').localeCompare(bv || '')
       return sort.dir === 'asc' ? cmp : -cmp
     })
-  }, [filtered, sort, platform])
+  }, [shortcuts, sort, platform])
 
   // Paginate
   const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE))
@@ -81,23 +79,18 @@ export default function ShortcutsView({
     setRated((prev) => ({ ...prev, [id]: label }))
   }
 
-  function handleToggleFav() {
-    setShowFavOnly((v) => !v)
-    setPage(1)
-  }
-
   return (
     <div className="study-view">
       {/* Header */}
       <div className="study-header">
-        <h2 className="study-title">⭐ Shortcuts</h2>
+        <h2 className="study-title">⌨️ Shortcuts</h2>
         <div className="shortcuts-header-right">
           <button
-            className={`btn-toggle ${showFavOnly ? 'btn-toggle--on' : ''}`}
-            onClick={handleToggleFav}
-            title="Toggle favourites filter"
+            className="btn-add"
+            onClick={() => setShowAdd(true)}
+            title="Add a new shortcut"
           >
-            ⭐ {showFavOnly ? 'Favourites' : 'All shortcuts'}
+            + Add
           </button>
           <span className="study-progress">
             {sorted.length} shortcut{sorted.length !== 1 ? 's' : ''}
@@ -110,10 +103,12 @@ export default function ShortcutsView({
         <div className="empty-state">
           <p className="empty-icon">⭐</p>
           <h2>No favourites yet</h2>
-          <p>Star shortcuts in the Study or Discover views, or turn off the favourites filter to browse everything.</p>
-          <button className="btn-secondary" onClick={() => setShowFavOnly(false)}>
-            Show all shortcuts
-          </button>
+          <p>Star shortcuts in Study or Discover views, or turn off the favourites filter to browse everything.</p>
+          {showFavourites && (
+            <button className="btn-secondary" onClick={toggleShowFavourites}>
+              Show all shortcuts
+            </button>
+          )}
         </div>
       )}
 
@@ -144,7 +139,7 @@ export default function ShortcutsView({
                   return (
                     <tr key={s.id} className={`study-row ${ratingLabel ? `study-row--${ratingLabel}` : ''}`}>
                       <td className="study-cell study-cell--app">
-                        <span title={appMeta.label}>{appMeta.icon}</span>
+                        <AppIcon app={appMeta} />
                         <span className="study-app-label">{appMeta.label}</span>
                       </td>
                       <td className="study-cell study-cell--cat">{s.cat}</td>
@@ -212,6 +207,7 @@ export default function ShortcutsView({
       )}
 
       {editTarget && <EditModal shortcut={editTarget} onClose={() => setEditTarget(null)} />}
+      {showAdd    && <AddShortcutModal onClose={() => setShowAdd(false)} />}
     </div>
   )
 }

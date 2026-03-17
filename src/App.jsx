@@ -88,6 +88,8 @@ export default function App() {
             rateCard={rateCard}
             toggleFavourite={toggleFavourite}
             toggleNeedsEdit={toggleNeedsEdit}
+            showFavourites={showFavourites}
+            toggleShowFavourites={toggleShowFavourites}
           />
         )}
         {view === 'study' && (

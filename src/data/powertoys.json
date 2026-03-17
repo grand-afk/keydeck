@@ -1,0 +1,20 @@
+[
+  {"id":"pt-run-01","cat":"PowerToys Run","action":"Open PowerToys Run launcher","mac":"","win":"Alt+Space"},
+  {"id":"pt-run-02","cat":"PowerToys Run","action":"Close PowerToys Run","mac":"","win":"Escape"},
+  {"id":"pt-color-01","cat":"Color Picker","action":"Activate Color Picker","mac":"","win":"Win+Shift+C"},
+  {"id":"pt-sg-01","cat":"Shortcut Guide","action":"Show Windows shortcut overlay","mac":"","win":"Win (hold 1s)"},
+  {"id":"pt-aot-01","cat":"Always on Top","action":"Pin / unpin window as always on top","mac":"","win":"Win+Ctrl+T"},
+  {"id":"pt-te-01","cat":"Text Extractor","action":"OCR-capture a screen region to clipboard","mac":"","win":"Win+Shift+T"},
+  {"id":"pt-peek-01","cat":"Peek","action":"Preview selected file in File Explorer","mac":"","win":"Ctrl+Space"},
+  {"id":"pt-fz-01","cat":"FancyZones","action":"Snap dragged window into a zone","mac":"","win":"Hold Shift while dragging","context":"Hold Shift as you drag a window to see zone highlights"},
+  {"id":"pt-fz-02","cat":"FancyZones","action":"Move window to next zone","mac":"","win":"Win+Ctrl+Alt+→"},
+  {"id":"pt-fz-03","cat":"FancyZones","action":"Move window to previous zone","mac":"","win":"Win+Ctrl+Alt+←"},
+  {"id":"pt-vcm-01","cat":"Video Conference Mute","action":"Toggle microphone mute (global)","mac":"","win":"Win+Shift+A"},
+  {"id":"pt-vcm-02","cat":"Video Conference Mute","action":"Toggle camera mute (global)","mac":"","win":"Win+Shift+O"},
+  {"id":"pt-vcm-03","cat":"Video Conference Mute","action":"Toggle both mic and camera","mac":"","win":"Win+Shift+Q"},
+  {"id":"pt-mj-01","cat":"Mouse Jump","action":"Teleport mouse pointer to any screen","mac":"","win":"Win+Shift+D"},
+  {"id":"pt-cal-01","cat":"Crop and Lock","action":"Crop and lock a window region","mac":"","win":"Win+Shift+R"},
+  {"id":"pt-cal-02","cat":"Crop and Lock","action":"Thumbnail crop of a window","mac":"","win":"Win+Ctrl+Shift+R"},
+  {"id":"pt-awake-01","cat":"Awake","action":"Keep system awake (toggle)","mac":"","win":"Win+Shift+K","context":"Prevents sleep without changing power plan"},
+  {"id":"pt-qa-01","cat":"Quick Accent","action":"Open accent picker for the held letter","mac":"","win":"Hold letter + Space","context":"e.g. hold E then Space to pick é, ê, ë…"}
+]

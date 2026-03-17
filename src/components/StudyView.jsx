@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { QUALITY } from '../utils/sm2'
 import { APPS } from '../data/index'
+import AppIcon from './AppIcon'
 import EditModal from './EditModal'
 
 const DAILY_LIMIT = 10
@@ -116,7 +117,7 @@ export default function StudyView({
               return (
                 <tr key={s.id} className={`study-row ${ratingLabel ? `study-row--${ratingLabel}` : ''}`}>
                   <td className="study-cell study-cell--app">
-                    <span title={appMeta.label}>{appMeta.icon}</span>
+                    <AppIcon app={appMeta} />
                     <span className="study-app-label">{appMeta.label}</span>
                   </td>
                   <td className="study-cell study-cell--cat">{s.cat}</td>

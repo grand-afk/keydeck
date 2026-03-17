@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { APPS } from '../data/index'
 import { QUALITY } from '../utils/sm2'
+import AppIcon from './AppIcon'
 import EditModal from './EditModal'
 
 /**
@@ -119,7 +120,7 @@ export default function SearchView({
                     className={`study-row ${ratingLabel ? `study-row--${ratingLabel}` : ''}`}
                   >
                     <td className="study-cell study-cell--app">
-                      <span title={appMeta.label}>{appMeta.icon}</span>
+                      <AppIcon app={appMeta} />
                       <span className="study-app-label">{appMeta.label}</span>
                     </td>
                     <td className="study-cell study-cell--cat">{s.cat}</td>

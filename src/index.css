@@ -889,3 +889,62 @@ body {
   color: #fff;
   font-weight: 600;
 }
+
+/* ── App icons (official product icons via img, or emoji fallback) ── */
+.app-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  border-radius: 3px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.app-icon--emoji {
+  width: auto;
+  font-size: 1em;
+  line-height: 1;
+}
+.app-chip .app-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Add shortcut button ── */
+.btn-add {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px dashed var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-add:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ── Form select element (AddShortcutModal) ── */
+.form-input select,
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+/* ── Form required marker ── */
+.form-required {
+  color: #f87171;
+  margin-left: 2px;
+}
+
+/* ── Form error message ── */
+.form-error {
+  color: #f87171;
+  font-size: 0.82rem;
+  margin-top: 4px;
+}
