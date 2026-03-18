@@ -52,6 +52,7 @@ export function useSettings() {
 
   const platform       = settings.platform       ?? 'mac'
   const selectedApps   = settings.selectedApps   ?? []
+  const hiddenApps     = settings.hiddenApps      ?? []
   const showFavourites = settings.showFavourites  ?? false
   const darkMode       = settings.darkMode        ?? true   // default: dark
   const showRateCol    = settings.showRateCol     ?? true   // default: visible
@@ -75,6 +76,19 @@ export function useSettings() {
     [update],
   )
 
+  // toggleHideApp: permanently remove/restore an app from the chip row + shortcuts.
+  // Also removes the app from selectedApps so a hidden app can never be an active filter.
+  const toggleHideApp = useCallback(
+    (appId) => {
+      const newHidden = hiddenApps.includes(appId)
+        ? hiddenApps.filter((a) => a !== appId)
+        : [...hiddenApps, appId]
+      const newSelected = selectedApps.filter((a) => !newHidden.includes(a))
+      update({ hiddenApps: newHidden, selectedApps: newSelected })
+    },
+    [hiddenApps, selectedApps, update],
+  )
+
   const toggleShowFavourites = useCallback(
     () => update({ showFavourites: !showFavourites }),
     [showFavourites, update],
@@ -93,6 +107,7 @@ export function useSettings() {
   return {
     platform, setPlatform,
     selectedApps, toggleApp, setSelectedApps,
+    hiddenApps, toggleHideApp,
     showFavourites, toggleShowFavourites,
     darkMode, toggleDarkMode,
     showRateCol, toggleRateCol,

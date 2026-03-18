@@ -28,6 +28,7 @@ export default function App() {
   const {
     platform, setPlatform,
     selectedApps, toggleApp, setSelectedApps,
+    hiddenApps, toggleHideApp,
     showFavourites, toggleShowFavourites,
     darkMode, toggleDarkMode,
     showRateCol, toggleRateCol,
@@ -44,7 +45,7 @@ export default function App() {
     document.documentElement.classList.toggle('light', !darkMode)
   }, [darkMode])
 
-  const shortcuts    = getShortcuts(selectedApps)
+  const shortcuts    = getShortcuts(selectedApps, hiddenApps)
   const allShortcuts = useMemo(() => getAllShortcuts(), [])  // for flagged modal
 
   // Visible shortcuts: search → fav filter → all
@@ -121,6 +122,7 @@ export default function App() {
         setPlatform={setPlatform}
         selectedApps={selectedApps}
         toggleApp={toggleApp}
+        hiddenApps={hiddenApps}
         showFavourites={showFavourites}
         toggleShowFavourites={toggleShowFavourites}
         onExport={exportData}
@@ -172,9 +174,8 @@ export default function App() {
             {view === 'help' && <HelpView />}
             {view === 'settings' && (
               <SettingsView
-                selectedApps={selectedApps}
-                toggleApp={toggleApp}
-                setSelectedApps={setSelectedApps}
+                hiddenApps={hiddenApps}
+                toggleHideApp={toggleHideApp}
                 platform={platform}
                 setPlatform={setPlatform}
                 darkMode={darkMode}

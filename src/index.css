@@ -1236,19 +1236,18 @@ th:hover .col-hide-btn { opacity: 1; }
   position: relative;
 }
 
-/* "All" state — no filter active, everything shown */
-.settings-app-card--all {
+/* Visible — app is shown in filter bar (default state) */
+.settings-app-card--visible {
   border-color: var(--border);
   color: var(--text);
-  opacity: 0.75;
+  opacity: 1;
 }
 
-/* Explicitly selected */
-.settings-app-card--on {
-  border-color: var(--accent);
-  color: var(--text);
-  background: color-mix(in srgb, var(--accent) 12%, var(--surface2));
-  opacity: 1;
+/* Hidden — app is removed from filter bar + shortcuts */
+.settings-app-card--hidden {
+  border-color: transparent;
+  color: var(--text-muted);
+  opacity: 0.4;
 }
 
 .settings-app-card:hover {
@@ -1274,18 +1273,13 @@ th:hover .col-hide-btn { opacity: 1; }
   white-space: nowrap;
 }
 
-.settings-app-key {
+.settings-app-status {
   font-size: 0.6rem;
-  padding: 1px 4px;
-  border-radius: 3px;
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
-  font-family: 'SF Mono', 'Consolas', monospace;
-  line-height: 1.4;
+  color: var(--text-muted);
+  margin-top: 1px;
 }
-:root.light .settings-app-key {
-  color: #000;
-  border-color: rgba(0,0,0,0.3);
+.settings-app-card--hidden .settings-app-status {
+  color: var(--again);
 }
 
 /* ── Preferences rows ── */

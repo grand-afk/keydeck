@@ -2,9 +2,8 @@ import { APPS } from '../data/index'
 import AppIcon from './AppIcon'
 
 export default function SettingsView({
-  selectedApps,
-  toggleApp,
-  setSelectedApps,
+  hiddenApps,
+  toggleHideApp,
   platform,
   setPlatform,
   darkMode,
@@ -12,60 +11,50 @@ export default function SettingsView({
   showRateCol,
   toggleRateCol,
 }) {
-  // Custom app (Bookmarks) is managed separately via Add Shortcut — exclude from grid
+  // Custom (Bookmarks) shortcuts are managed via Add Shortcut — exclude from grid
   const filterableApps = APPS.filter((a) => a.id !== 'custom')
-
-  const isFiltered   = selectedApps.length > 0
-  const allCount     = filterableApps.length
-  const activeCount  = isFiltered ? selectedApps.length : allCount
+  const visibleCount   = filterableApps.length - hiddenApps.length
 
   return (
     <div className="settings-view">
       <h2 className="settings-title">⚙️ Settings</h2>
 
-      {/* ── App selection ─────────────────────────────────────── */}
+      {/* ── App visibility ─────────────────────────────────────── */}
       <section className="settings-section">
         <div className="settings-section-header">
           <div>
             <h3 className="settings-section-title">Apps</h3>
             <p className="settings-hint">
-              Select which apps show in Shortcuts, Practise and Discover.{' '}
-              {isFiltered
-                ? `${activeCount} of ${allCount} selected.`
-                : 'All apps shown (none selected).'}
+              Hide apps you don't use to keep the filter bar tidy.
+              Hidden apps won't appear in the filter bar, Shortcuts, Practise or Discover.{' '}
+              {hiddenApps.length > 0
+                ? `${visibleCount} of ${filterableApps.length} shown.`
+                : 'All apps shown.'}
             </p>
           </div>
-          <div className="settings-section-actions">
+          {hiddenApps.length > 0 && (
             <button
               className="btn-secondary"
-              onClick={() => setSelectedApps(filterableApps.map((a) => a.id))}
-              disabled={selectedApps.length === filterableApps.length}
-            >
-              Select all
-            </button>
-            <button
-              className="btn-secondary"
-              onClick={() => setSelectedApps([])}
-              disabled={selectedApps.length === 0}
+              onClick={() => hiddenApps.forEach((id) => toggleHideApp(id))}
             >
               Show all
             </button>
-          </div>
+          )}
         </div>
 
         <div className="settings-app-grid">
           {filterableApps.map((app) => {
-            const on = selectedApps.includes(app.id)
+            const hidden = hiddenApps.includes(app.id)
             return (
               <button
                 key={app.id}
-                className={`settings-app-card ${on ? 'settings-app-card--on' : ''} ${!isFiltered ? 'settings-app-card--all' : ''}`}
-                onClick={() => toggleApp(app.id)}
-                title={`${on ? 'Deselect' : 'Select'} ${app.label} — keyboard key: ${app.key}`}
+                className={`settings-app-card ${hidden ? 'settings-app-card--hidden' : 'settings-app-card--visible'}`}
+                onClick={() => toggleHideApp(app.id)}
+                title={hidden ? `Show ${app.label} in filter bar` : `Hide ${app.label} from filter bar`}
               >
-                <AppIcon app={app} size="lg" />
+                <AppIcon app={app} size={28} />
                 <span className="settings-app-name">{app.label}</span>
-                <kbd className="settings-app-key">{app.key}</kbd>
+                <span className="settings-app-status">{hidden ? 'Hidden' : 'Visible'}</span>
               </button>
             )
           })}
@@ -90,7 +79,7 @@ export default function SettingsView({
               >
                 <img
                   src="https://www.google.com/s2/favicons?domain=apple.com&sz=64"
-                  alt="Mac"
+                  alt=""
                   className="platform-icon"
                 />
                 macOS <kbd className="kbd-hint">M</kbd>
@@ -101,7 +90,7 @@ export default function SettingsView({
               >
                 <img
                   src="https://www.google.com/s2/favicons?domain=microsoft.com&sz=64"
-                  alt="Win"
+                  alt=""
                   className="platform-icon"
                 />
                 Windows <kbd className="kbd-hint">W</kbd>

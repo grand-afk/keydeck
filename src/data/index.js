@@ -18,12 +18,13 @@ import custom       from './custom.json'
 
 // ─── App metadata ──────────────────────────────────────────────────────────
 // iconUrl: uses Google's favicon service for web apps (reliable, no attribution needed)
-// Microsoft Fluent brand icon CDN — distinct per-product icons
-const MS = (name) => `https://res.cdn.office.net/assets/brand-icons/product/svg/${name}_48x1.svg`
+// Microsoft Office product icons — PNG variants from the Office brand CDN
+// (PNG avoids any text nodes present in the SVG lockup variants)
+const MS = (name) => `https://res.cdn.office.net/assets/brand-icons/product/png/${name}_48x1.png`
 
 export const APPS = [
-  { id: 'excel',           iconUrl: MS('excel'),                                                                   label: 'Excel',       key: 'X' },
-  { id: 'powerpoint',      iconUrl: MS('powerpoint'),                                                              label: 'PowerPoint',  key: 'P' },
+  { id: 'excel',           iconUrl: MS('excel'),        icon: '📗',                                               label: 'Excel',       key: 'X' },
+  { id: 'powerpoint',      iconUrl: MS('powerpoint'),   icon: '📕',                                               label: 'PowerPoint',  key: 'P' },
   { id: 'gmail',           iconUrl: 'https://www.google.com/s2/favicons?domain=mail.google.com&sz=64',             label: 'Gmail',       key: 'G' },
   { id: 'google-chat',     iconUrl: 'https://www.google.com/s2/favicons?domain=chat.google.com&sz=64',             label: 'Chat',        key: 'C' },
   { id: 'google-calendar', iconUrl: 'https://www.google.com/s2/favicons?domain=calendar.google.com&sz=64',         label: 'Calendar',    key: 'A' },
@@ -32,7 +33,7 @@ export const APPS = [
   { id: 'google-sheets',   iconUrl: 'https://www.google.com/s2/favicons?domain=sheets.google.com&sz=64',           label: 'Sheets',      key: 'H' },
   { id: 'google-drive',    iconUrl: 'https://www.google.com/s2/favicons?domain=drive.google.com&sz=64',            label: 'Drive',       key: 'D' },
   { id: 'windows',         iconUrl: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=64',               label: 'Desktop',     key: 'N' },
-  { id: 'word',            iconUrl: MS('word'),                                                                     label: 'Word',        key: 'U' },
+  { id: 'word',            iconUrl: MS('word'),         icon: '📘',                                               label: 'Word',        key: 'U' },
   { id: 'powertoys',       icon: '⚙️',                                                                             label: 'PowerToys',   key: 'Y' },
   { id: 'slack',           iconUrl: 'https://www.google.com/s2/favicons?domain=slack.com&sz=64',                   label: 'Slack',       key: 'K' },
   { id: 'vimium',          icon: '🌐',                                                                             label: 'Vimium',      key: 'V' },
@@ -116,13 +117,18 @@ function applyOverrides(shortcuts) {
  * Includes user-created custom shortcuts from localStorage.
  * Pass an empty array or undefined to get every shortcut.
  */
-export function getShortcuts(selectedApps) {
+export function getShortcuts(selectedApps, hiddenApps = []) {
   const custom = getCustomShortcuts()
   const combined = [...ALL_SHORTCUTS, ...custom]
+  // Always exclude hidden apps first
+  const visible = hiddenApps.length > 0
+    ? combined.filter((s) => !hiddenApps.includes(s.app))
+    : combined
+  // Then apply the active filter (selectedApps)
   const base =
     !selectedApps || selectedApps.length === 0
-      ? combined
-      : combined.filter((s) => selectedApps.includes(s.app))
+      ? visible
+      : visible.filter((s) => selectedApps.includes(s.app))
   return applyOverrides(base)
 }
 

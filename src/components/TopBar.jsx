@@ -11,6 +11,7 @@ export default function TopBar({
   setPlatform,
   selectedApps,
   toggleApp,
+  hiddenApps,
   showFavourites,
   toggleShowFavourites,
   onExport,
@@ -129,28 +130,31 @@ export default function TopBar({
         </div>
       </div>
 
-      {/* ── Row 2: active app chips (only shown when apps are selected in Settings) ── */}
-      {selectedApps.length > 0 && (
-        <div className="app-filters" role="group" aria-label="Active app filters">
-          {selectedApps.map((id) => {
-            const app = APPS.find((a) => a.id === id)
-            if (!app) return null
-            const resolved = resolveApp(app)
-            return (
-              <button
-                key={id}
-                className="app-chip app-chip--active"
-                onClick={() => toggleApp(id)}
-                title={`Remove ${resolved.label} filter [${app.key}]`}
-              >
-                <AppIcon app={resolved} />
-                {' '}{resolved.label}
-                <span className="app-chip__remove" aria-hidden="true">✕</span>
-              </button>
-            )
-          })}
-        </div>
-      )}
+      {/* ── Row 2: app filter chips (all non-hidden apps; keyboard shortcuts toggle them) ── */}
+      <div className="app-filters" role="group" aria-label="Filter by app">
+        <button
+          className={`app-chip ${selectedApps.length === 0 ? 'app-chip--active' : ''}`}
+          onClick={() => selectedApps.forEach((id) => toggleApp(id))}
+          title="Show all apps"
+        >
+          All
+        </button>
+        {APPS.filter((a) => !hiddenApps.includes(a.id)).map((app) => {
+          const resolved = resolveApp(app)
+          return (
+            <button
+              key={app.id}
+              className={`app-chip ${selectedApps.includes(app.id) ? 'app-chip--active' : ''}`}
+              onClick={() => toggleApp(app.id)}
+              title={`Filter by ${resolved.label}${app.key ? ` [${app.key}]` : ''}`}
+            >
+              <AppIcon app={resolved} />
+              {' '}{resolved.label}
+              {app.key && <kbd className="kbd-hint">{app.key}</kbd>}
+            </button>
+          )
+        })}
+      </div>
 
       {/* ── Row 3: inline search bar ── */}
       {searchOpen && (
