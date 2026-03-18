@@ -83,7 +83,10 @@ export default function HelpView() {
             <tr><td><kbd>C</kbd></td><td>Toggle Chat filter</td></tr>
             <tr><td><kbd>A</kbd></td><td>Toggle Calendar filter</td></tr>
             <tr><td><kbd>T</kbd></td><td>Toggle Tasks filter</td></tr>
+            <tr><td><kbd>J</kbd></td><td>Toggle Docs filter</td></tr>
+            <tr><td><kbd>H</kbd></td><td>Toggle Sheets filter</td></tr>
             <tr><td><kbd>D</kbd></td><td>Toggle Drive filter</td></tr>
+            <tr><td><kbd>U</kbd></td><td>Toggle Word filter</td></tr>
             <tr><td><kbd>N</kbd></td><td>Toggle Desktop filter</td></tr>
             <tr><td><kbd>Y</kbd></td><td>Toggle PowerToys filter</td></tr>
             <tr><td><kbd>K</kbd></td><td>Toggle Slack filter</td></tr>
@@ -134,7 +137,10 @@ export default function HelpView() {
           <li>🗨️ <strong>Google Chat</strong> — navigation, messaging, formatting</li>
           <li>📅 <strong>Google Calendar</strong> — events, views, navigation</li>
           <li>✅ <strong>Google Tasks</strong> — tasks, navigation</li>
+          <li>📄 <strong>Google Docs</strong> — formatting, styles, navigation, comments</li>
+          <li>📊 <strong>Google Sheets</strong> — navigation, editing, formulas, formatting</li>
           <li>📁 <strong>Google Drive</strong> — navigation, selection, file actions</li>
+          <li>📝 <strong>Word</strong> — formatting, styles, paragraphs, review, navigation</li>
           <li>🖥️ <strong>Desktop</strong> — Windows snapping, virtual desktops, system shortcuts</li>
           <li>⚙️ <strong>PowerToys</strong> — Run, FancyZones, Color Picker, Text Extractor and more</li>
           <li>💬 <strong>Slack</strong> — navigation, messaging, formatting</li>

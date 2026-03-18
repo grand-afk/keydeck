@@ -4,8 +4,11 @@ import gmail        from './gmail.json'
 import googleChat   from './google-chat.json'
 import googleCal    from './google-calendar.json'
 import googleTasks  from './google-tasks.json'
+import googleDocs   from './google-docs.json'
+import googleSheets from './google-sheets.json'
 import googleDrive  from './google-drive.json'
 import windows      from './windows.json'
+import word         from './word.json'
 import powertoys    from './powertoys.json'
 import slack        from './slack.json'
 import vimium       from './vimium.json'
@@ -22,8 +25,11 @@ export const APPS = [
   { id: 'google-chat',     iconUrl: 'https://www.google.com/s2/favicons?domain=chat.google.com&sz=64',            label: 'Chat',        key: 'C' },
   { id: 'google-calendar', iconUrl: 'https://www.google.com/s2/favicons?domain=calendar.google.com&sz=64',        label: 'Calendar',    key: 'A' },
   { id: 'google-tasks',    iconUrl: 'https://www.google.com/s2/favicons?domain=tasks.google.com&sz=64',           label: 'Tasks',       key: 'T' },
+  { id: 'google-docs',     iconUrl: 'https://www.google.com/s2/favicons?domain=docs.google.com&sz=64',            label: 'Docs',        key: 'J' },
+  { id: 'google-sheets',   iconUrl: 'https://www.google.com/s2/favicons?domain=sheets.google.com&sz=64',          label: 'Sheets',      key: 'H' },
   { id: 'google-drive',    iconUrl: 'https://www.google.com/s2/favicons?domain=drive.google.com&sz=64',           label: 'Drive',       key: 'D' },
   { id: 'windows',         iconUrl: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=64',              label: 'Desktop',     key: 'N' },
+  { id: 'word',            iconUrl: 'https://www.google.com/s2/favicons?domain=word.office.com&sz=64',            label: 'Word',        key: 'U' },
   { id: 'powertoys',       icon: '⚙️',                                                                            label: 'PowerToys',   key: 'Y' },
   { id: 'slack',           iconUrl: 'https://www.google.com/s2/favicons?domain=slack.com&sz=64',                  label: 'Slack',       key: 'K' },
   { id: 'vimium',          icon: '🌐',                                                                            label: 'Vimium',      key: 'V' },
@@ -42,7 +48,10 @@ const ALL_SHORTCUTS = [
   ...tag('google-chat',      googleChat),
   ...tag('google-calendar',  googleCal),
   ...tag('google-tasks',     googleTasks),
+  ...tag('google-docs',      googleDocs),
+  ...tag('google-sheets',    googleSheets),
   ...tag('google-drive',     googleDrive),
+  ...tag('word',             word),
   ...tag('windows',          windows),
   ...tag('powertoys',        powertoys),
   ...tag('slack',            slack),
