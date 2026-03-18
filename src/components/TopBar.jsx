@@ -14,6 +14,7 @@ export default function TopBar({
   hiddenApps,
   showFavourites,
   toggleShowFavourites,
+  keyOverrides = {},
   onExport,
   onImport,
   darkMode,
@@ -75,10 +76,10 @@ export default function TopBar({
             className={`platform-btn ${platform === 'win' ? 'platform-btn--active' : ''}`}
             onClick={() => setPlatform('win')}
             aria-pressed={platform === 'win'}
-            title="Switch to Windows shortcuts [W]"
+            title="Switch to Windows shortcuts"
           >
             <img src={WIN_ICON} className="platform-icon" alt="" />
-            Win<kbd className="kbd-hint">W</kbd>
+            Win
           </button>
         </div>
 
@@ -141,16 +142,20 @@ export default function TopBar({
         </button>
         {APPS.filter((a) => !hiddenApps.includes(a.id)).map((app) => {
           const resolved = resolveApp(app)
+          // Effective key: custom override if set, otherwise the APPS default
+          const effectiveKey = keyOverrides[app.id] !== undefined
+            ? keyOverrides[app.id]
+            : (app.key || '')
           return (
             <button
               key={app.id}
               className={`app-chip ${selectedApps.includes(app.id) ? 'app-chip--active' : ''}`}
               onClick={() => toggleApp(app.id)}
-              title={`Filter by ${resolved.label}${app.key ? ` [${app.key}]` : ''}`}
+              title={`Filter by ${resolved.label}${effectiveKey ? ` [${effectiveKey}]` : ''}`}
             >
               <AppIcon app={resolved} />
               {' '}{resolved.label}
-              {app.key && <kbd className="kbd-hint">{app.key}</kbd>}
+              {effectiveKey && <kbd className="kbd-hint">{effectiveKey}</kbd>}
             </button>
           )
         })}

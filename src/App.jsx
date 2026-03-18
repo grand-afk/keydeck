@@ -45,6 +45,7 @@ export default function App() {
     showFavourites, toggleShowFavourites,
     darkMode, toggleDarkMode,
     showRateCol, toggleRateCol,
+    keyOverrides, setKeyOverride, resetKeyOverride,
   } = useSettings()
 
   const {
@@ -107,25 +108,31 @@ export default function App() {
       // '/' opens search
       if (e.key === '/') { e.preventDefault(); setSearchOpen(true); return }
 
-      // App filter keyboard shortcuts — derived from APPS[].key
-      const appByKey = APPS.find((a) => a.key === e.key.toUpperCase())
+      // App filter keyboard shortcuts — check overrides first, fall back to APPS default
+      const appByKey = APPS.find((a) => {
+        const effectiveKey = keyOverrides[a.id] !== undefined ? keyOverrides[a.id] : (a.key || '')
+        return effectiveKey && effectiveKey.toUpperCase() === e.key.toUpperCase()
+      })
       if (appByKey) { toggleApp(appByKey.id); return }
 
       switch (e.key) {
+        // M = Mac platform (uncontested — Meet moved to Z)
         case 'm': case 'M': setPlatform('mac'); break
-        case 'w': case 'W': setPlatform('win'); break
+        // W removed: Teams now uses W as its app key
+        // Win platform has no keyboard shortcut; use the button in TopBar or Settings
         case '1': navigateTo(VIEWS[0]); break
         case '2': navigateTo(VIEWS[1]); break
         case '3': navigateTo(VIEWS[2]); break
         case '4': navigateTo(VIEWS[3]); break
         case '5': navigateTo(VIEWS[4]); break
+        // F = Favourites (uncontested — Teams moved to W)
         case 'f': case 'F': toggleShowFavourites(); break
         default: break
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [setPlatform, toggleShowFavourites, toggleApp, searchOpen, flaggedOpen, closeSearch, navigateTo])
+  }, [setPlatform, toggleShowFavourites, toggleApp, searchOpen, flaggedOpen, closeSearch, navigateTo, keyOverrides])
 
   // Common props shared by all table views
   const tableProps = {
@@ -152,6 +159,7 @@ export default function App() {
         hiddenApps={hiddenApps}
         showFavourites={showFavourites}
         toggleShowFavourites={toggleShowFavourites}
+        keyOverrides={keyOverrides}
         onExport={exportData}
         onImport={importData}
         darkMode={darkMode}
@@ -209,6 +217,9 @@ export default function App() {
                 toggleDarkMode={toggleDarkMode}
                 showRateCol={showRateCol}
                 toggleRateCol={toggleRateCol}
+                keyOverrides={keyOverrides}
+                setKeyOverride={setKeyOverride}
+                resetKeyOverride={resetKeyOverride}
               />
             )}
           </>

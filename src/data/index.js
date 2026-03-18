@@ -38,7 +38,7 @@ const GWS = (domain) =>
 export const APPS = [
   // ── Google Workspace ──────────────────────────────────────────────────────
   { id: 'gmail',           iconUrl: GWS('mail.google.com'),          icon: '📧', label: 'Gmail',       key: 'G' },
-  { id: 'google-meet',     iconUrl: GWS('meet.google.com'),          icon: '📹', label: 'Meet',        key: 'M' },
+  { id: 'google-meet',     iconUrl: GWS('meet.google.com'),          icon: '📹', label: 'Meet',        key: 'Z' },
   { id: 'google-chat',     iconUrl: GWS('chat.google.com'),          icon: '💬', label: 'Chat',        key: 'C' },
   { id: 'google-calendar', iconUrl: GWS('calendar.google.com'),      icon: '📅', label: 'Calendar',    key: 'A' },
   { id: 'google-drive',    iconUrl: GWS('drive.google.com'),         icon: '💾', label: 'Drive',       key: 'D' },
@@ -55,7 +55,7 @@ export const APPS = [
   { id: 'powerpoint',      iconUrl: MS('powerpoint'),                 icon: '📕', label: 'PowerPoint',  key: 'P' },
   { id: 'word',            iconUrl: MS('word'),                       icon: '📘', label: 'Word',        key: 'U' },
   { id: 'outlook',         iconUrl: MS('outlook'),                    icon: '📨', label: 'Outlook',     key: 'Q' },
-  { id: 'teams',           iconUrl: MS('teams'),                      icon: '👥', label: 'Teams',       key: 'F' },
+  { id: 'teams',           iconUrl: MS('teams'),                      icon: '👥', label: 'Teams',       key: 'W' },
 
   // ── Other apps ────────────────────────────────────────────────────────────
   { id: 'windows',         iconUrl: GWS('microsoft.com'),             icon: '🪟', label: 'Desktop',     key: 'N' },

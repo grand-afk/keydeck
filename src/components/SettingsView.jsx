@@ -1,5 +1,10 @@
+import { useState, useEffect } from 'react'
 import { APPS } from '../data/index'
 import AppIcon from './AppIcon'
+
+// Keys that are reserved for system-level shortcuts and cannot be remapped
+const RESERVED_KEYS = new Set(['M', 'F', '/', '1', '2', '3', '4', '5'])
+const RESERVED_LABEL = 'M (Mac platform), F (Favourites), / (Search), 1–5 (tabs)'
 
 export default function SettingsView({
   hiddenApps,
@@ -10,10 +15,51 @@ export default function SettingsView({
   toggleDarkMode,
   showRateCol,
   toggleRateCol,
+  keyOverrides = {},
+  setKeyOverride,
+  resetKeyOverride,
 }) {
-  // Custom (Bookmarks) shortcuts are managed via Add Shortcut — exclude from grid
+  // Custom (Bookmarks) shortcuts are managed via Add Shortcut — exclude from grids
   const filterableApps = APPS.filter((a) => a.id !== 'custom')
   const visibleCount   = filterableApps.length - hiddenApps.length
+
+  // ── Key remapping state ─────────────────────────────────────────────────
+  const [remappingId, setRemappingId] = useState(null)
+
+  // Capture the next keypress when in remap mode
+  useEffect(() => {
+    if (!remappingId) return
+
+    function handleKey(e) {
+      e.preventDefault()
+      e.stopPropagation()
+      const key = e.key.toUpperCase()
+
+      if (e.key === 'Escape') { setRemappingId(null); return }
+
+      // Single A–Z letters only; reject reserved keys
+      if (!/^[A-Z]$/.test(key)) return   // ignore Shift, Enter, etc. without cancelling
+      if (RESERVED_KEYS.has(key)) {
+        setRemappingId(null)
+        return
+      }
+
+      setKeyOverride(remappingId, key)
+      setRemappingId(null)
+    }
+
+    // capture: true ensures this fires before the global App.jsx handler
+    window.addEventListener('keydown', handleKey, { capture: true })
+    return () => window.removeEventListener('keydown', handleKey, { capture: true })
+  }, [remappingId, setKeyOverride])
+
+  // Click anywhere outside to cancel remap
+  useEffect(() => {
+    if (!remappingId) return
+    function handleClick() { setRemappingId(null) }
+    window.addEventListener('click', handleClick)
+    return () => window.removeEventListener('click', handleClick)
+  }, [remappingId])
 
   return (
     <div className="settings-view">
@@ -61,6 +107,63 @@ export default function SettingsView({
         </div>
       </section>
 
+      {/* ── App keyboard shortcuts ─────────────────────────────── */}
+      <section className="settings-section">
+        <h3 className="settings-section-title">App keyboard shortcuts</h3>
+        <p className="settings-hint">
+          Each filter chip has a single-key shortcut. Click a key badge to remap it,
+          then press your chosen letter. Reserved (cannot be remapped): {RESERVED_LABEL}.
+        </p>
+
+        <div className="key-remap-grid">
+          {filterableApps.map((app) => {
+            const defaultKey   = app.key || ''
+            const effectiveKey = keyOverrides[app.id] !== undefined
+              ? keyOverrides[app.id]
+              : defaultKey
+            const isCustom     = keyOverrides[app.id] !== undefined
+            const isListening  = remappingId === app.id
+
+            return (
+              <div key={app.id} className="key-remap-row">
+                <AppIcon app={app} size={18} />
+                <span className="key-remap-label">{app.label}</span>
+
+                <button
+                  className={[
+                    'key-remap-btn',
+                    isListening ? 'key-remap-btn--listening' : '',
+                    isCustom && !isListening ? 'key-remap-btn--custom' : '',
+                  ].filter(Boolean).join(' ')}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setRemappingId(isListening ? null : app.id)
+                  }}
+                  title={
+                    isListening
+                      ? 'Press a letter key… (Esc to cancel)'
+                      : `${effectiveKey || '—'} · Click to remap`
+                  }
+                >
+                  {isListening ? '?' : (effectiveKey || '—')}
+                </button>
+
+                {isCustom && !isListening && (
+                  <button
+                    className="key-remap-reset"
+                    onClick={(e) => { e.stopPropagation(); resetKeyOverride(app.id) }}
+                    title={`Reset to default (${defaultKey || 'none'})`}
+                    aria-label="Reset to default"
+                  >
+                    ↺
+                  </button>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </section>
+
       {/* ── Preferences ───────────────────────────────────────── */}
       <section className="settings-section">
         <h3 className="settings-section-title">Preferences</h3>
@@ -93,7 +196,7 @@ export default function SettingsView({
                   alt=""
                   className="platform-icon"
                 />
-                Windows <kbd className="kbd-hint">W</kbd>
+                Windows
               </button>
             </div>
           </div>

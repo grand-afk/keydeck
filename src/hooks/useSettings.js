@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
+import { APPS } from '../data/index'
 
 const SETTINGS_KEY = 'keydeck:settings'
 
@@ -56,6 +57,7 @@ export function useSettings() {
   const showFavourites = settings.showFavourites  ?? false
   const darkMode       = settings.darkMode        ?? true   // default: dark
   const showRateCol    = settings.showRateCol     ?? true   // default: visible
+  const keyOverrides   = settings.keyOverrides    ?? {}     // { appId: 'X' | '' }
 
   // Keep URL param in sync
   useEffect(() => { setPlatformInUrl(platform) }, [platform])
@@ -104,6 +106,42 @@ export function useSettings() {
     [showRateCol, update],
   )
 
+  // ── Key overrides ─────────────────────────────────────────────────────────
+  // keyOverrides maps appId → single uppercase letter ('' means no shortcut).
+  // Missing key = use the APPS default.
+
+  /** Set a custom key for an app.  Pass '' to remove the shortcut entirely. */
+  const setKeyOverride = useCallback((appId, key) => {
+    const upper = (key || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 1)
+    const next = { ...keyOverrides }
+    if (upper) {
+      // Steal the key from whichever other app currently holds it
+      APPS.forEach((a) => {
+        if (a.id === appId) return
+        const effective = next[a.id] !== undefined ? next[a.id] : (a.key || '')
+        if (effective.toUpperCase() === upper) next[a.id] = ''
+      })
+    }
+    next[appId] = upper  // '' = no shortcut, letter = custom key
+    update({ keyOverrides: next })
+  }, [keyOverrides, update])
+
+  /** Remove override and revert to the APPS default key. */
+  const resetKeyOverride = useCallback((appId) => {
+    const next = { ...keyOverrides }
+    const defaultKey = (APPS.find((a) => a.id === appId)?.key || '').toUpperCase()
+    delete next[appId]
+    // If reverting would create a conflict, clear the other app's key
+    if (defaultKey) {
+      APPS.forEach((a) => {
+        if (a.id === appId) return
+        const effective = next[a.id] !== undefined ? next[a.id] : (a.key || '')
+        if (effective.toUpperCase() === defaultKey) next[a.id] = ''
+      })
+    }
+    update({ keyOverrides: next })
+  }, [keyOverrides, update])
+
   return {
     platform, setPlatform,
     selectedApps, toggleApp, setSelectedApps,
@@ -111,5 +149,6 @@ export function useSettings() {
     showFavourites, toggleShowFavourites,
     darkMode, toggleDarkMode,
     showRateCol, toggleRateCol,
+    keyOverrides, setKeyOverride, resetKeyOverride,
   }
 }
