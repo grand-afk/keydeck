@@ -8,11 +8,12 @@ import ShortcutsView from './components/ShortcutsView'
 import StudyView from './components/StudyView'
 import DiscoverView from './components/DiscoverView'
 import HelpView from './components/HelpView'
+import SettingsView from './components/SettingsView'
 import FlaggedModal from './components/FlaggedModal'
 
 // Search tab removed — search is now an inline overlay via 🔍 in TopBar
 // 'study' renamed to 'practise' throughout
-const VIEWS = ['shortcuts', 'practise', 'discover', 'help']
+const VIEWS = ['shortcuts', 'practise', 'discover', 'help', 'settings']
 
 export default function App() {
   const [view, setView] = useState('shortcuts')
@@ -26,7 +27,7 @@ export default function App() {
 
   const {
     platform, setPlatform,
-    selectedApps, toggleApp,
+    selectedApps, toggleApp, setSelectedApps,
     showFavourites, toggleShowFavourites,
     darkMode, toggleDarkMode,
     showRateCol, toggleRateCol,
@@ -90,6 +91,7 @@ export default function App() {
         case '2': setView(VIEWS[1]); break
         case '3': setView(VIEWS[2]); break
         case '4': setView(VIEWS[3]); break
+        case '5': setView(VIEWS[4]); break
         case 'f': case 'F': toggleShowFavourites(); break
         default: break
       }
@@ -168,6 +170,19 @@ export default function App() {
               />
             )}
             {view === 'help' && <HelpView />}
+            {view === 'settings' && (
+              <SettingsView
+                selectedApps={selectedApps}
+                toggleApp={toggleApp}
+                setSelectedApps={setSelectedApps}
+                platform={platform}
+                setPlatform={setPlatform}
+                darkMode={darkMode}
+                toggleDarkMode={toggleDarkMode}
+                showRateCol={showRateCol}
+                toggleRateCol={toggleRateCol}
+              />
+            )}
           </>
         )}
       </main>

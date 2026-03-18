@@ -70,6 +70,11 @@ export function useSettings() {
     [selectedApps, update],
   )
 
+  const setSelectedApps = useCallback(
+    (apps) => update({ selectedApps: apps }),
+    [update],
+  )
+
   const toggleShowFavourites = useCallback(
     () => update({ showFavourites: !showFavourites }),
     [showFavourites, update],
@@ -87,7 +92,7 @@ export function useSettings() {
 
   return {
     platform, setPlatform,
-    selectedApps, toggleApp,
+    selectedApps, toggleApp, setSelectedApps,
     showFavourites, toggleShowFavourites,
     darkMode, toggleDarkMode,
     showRateCol, toggleRateCol,

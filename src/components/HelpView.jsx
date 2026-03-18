@@ -40,6 +40,10 @@ export default function HelpView() {
           <li>
             <strong>❓ Help [4]</strong> — You're here.
           </li>
+          <li>
+            <strong>⚙️ Settings [5]</strong> — Choose which apps appear in Shortcuts, Practise
+            and Discover. Also controls platform default, theme and Rate column visibility.
+          </li>
         </ul>
       </section>
 
@@ -72,6 +76,7 @@ export default function HelpView() {
             <tr><td><kbd>2</kbd></td><td>Go to Practise</td></tr>
             <tr><td><kbd>3</kbd></td><td>Go to Discover</td></tr>
             <tr><td><kbd>4</kbd></td><td>Go to Help</td></tr>
+            <tr><td><kbd>5</kbd></td><td>Go to Settings</td></tr>
             <tr><td><kbd>M</kbd></td><td>Switch to Mac platform</td></tr>
             <tr><td><kbd>W</kbd></td><td>Switch to Windows platform</td></tr>
             <tr><td><kbd>F</kbd></td><td>Toggle favourites filter</td></tr>

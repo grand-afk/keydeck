@@ -5,6 +5,7 @@ const TABS = [
   { id: 'practise',  icon: '📖', label: 'Practise',  key: '2' },
   { id: 'discover',  icon: '🎲', label: 'Discover',  key: '3' },
   { id: 'help',      icon: '❓', label: 'Help',      key: '4' },
+  { id: 'settings',  icon: '⚙️', label: 'Settings',  key: '5' },
 ]
 
 export default function BottomNav({ view, setView }) {
