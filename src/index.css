@@ -948,3 +948,199 @@ select.form-input {
   font-size: 0.82rem;
   margin-top: 4px;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — override all colour variables when :root.light is set
+═══════════════════════════════════════════════════════════════════════════ */
+:root.light {
+  --bg:           #f4f5f9;
+  --surface:      #ffffff;
+  --surface2:     #eceef6;
+  --border:       #d0d2e0;
+  --text:         #1a1b2e;
+  --text-muted:   #6b6d85;
+}
+
+:root.light body          { background: var(--bg); color: var(--text); }
+:root.light .top-bar      { background: var(--surface); border-color: var(--border); }
+:root.light .bottom-nav   { background: var(--surface); border-color: var(--border); }
+:root.light .study-table  { background: var(--surface); }
+:root.light .study-table thead th { background: var(--surface2); color: var(--text-muted); }
+:root.light .study-row:hover      { background: var(--surface2); }
+:root.light .modal        { background: var(--surface); border-color: var(--border); }
+:root.light .shortcut-badge { background: var(--surface2); color: var(--text); border-color: var(--border); }
+:root.light .icon-btn     { border-color: var(--border); color: var(--text-muted); }
+:root.light .icon-btn:hover { background: var(--surface2); color: var(--text); }
+:root.light .app-chip     { border-color: var(--border); color: var(--text-muted); }
+:root.light .app-chip:hover { background: var(--surface2); color: var(--text); }
+:root.light .platform-btn { color: var(--text-muted); }
+:root.light .platform-btn:not(.platform-btn--active):hover { background: var(--surface2); }
+:root.light .form-input   { background: var(--surface2); border-color: var(--border); color: var(--text); }
+:root.light .search-bar-input { background: var(--surface2); color: var(--text); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE FIXES — prevent left-side cropping
+═══════════════════════════════════════════════════════════════════════════ */
+html, body { overflow-x: hidden; }
+
+.app { min-width: 0; overflow-x: hidden; }
+
+/* Ensure the table scrolls horizontally on small screens */
+.study-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 600px) {
+  .top-bar       { padding: 8px 10px 6px; }
+  .main-content  { padding: 8px; }
+  .platform-btn  { padding: 5px 10px; font-size: 0.8rem; }
+  .app-chip      { padding: 3px 8px; font-size: 0.75rem; }
+  .study-title   { font-size: 1rem; }
+  /* Hide Category column on very small screens to save space */
+  .study-cell--cat, .study-table thead th:nth-child(2) { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INLINE SEARCH BAR (TopBar Row 3)
+═══════════════════════════════════════════════════════════════════════════ */
+.search-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+}
+
+.search-bar-icon { font-size: 0.9rem; flex-shrink: 0; }
+
+.search-bar-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 0.9rem;
+  min-width: 0;
+}
+
+.search-bar-input::placeholder { color: var(--text-muted); }
+
+.search-bar-clear {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 2px 4px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.search-bar-clear:hover { background: var(--surface); color: var(--text); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RATE COLUMN — toggle hide/show
+═══════════════════════════════════════════════════════════════════════════ */
+.rate-th {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* Hide button inside Rate header */
+.col-hide-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0 3px;
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  line-height: 1;
+}
+th:hover .col-hide-btn { opacity: 1; }
+
+/* Collapsed rate column header — thin clickable strip */
+.rate-col-collapsed {
+  width: 20px;
+  min-width: 20px;
+  max-width: 20px;
+  padding: 4px 2px !important;
+  text-align: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  background: var(--surface2);
+}
+.rate-col-collapsed:hover { background: var(--accent); color: #fff; }
+
+/* Hidden rate data cells */
+.rate-col-hidden {
+  width: 20px;
+  min-width: 20px;
+  padding: 0 !important;
+}
+
+/* Platform icon in toggle buttons */
+.platform-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FLAGGED MODAL — wider variant + table inside modal
+═══════════════════════════════════════════════════════════════════════════ */
+.modal--wide {
+  max-width: 760px;
+  width: 96%;
+}
+
+.modal-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 8px;
+}
+
+.modal-empty {
+  text-align: center;
+  padding: 32px 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HELP VIEW — keyboard shortcut table
+═══════════════════════════════════════════════════════════════════════════ */
+.help-kbd-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 0.875rem;
+}
+
+.help-kbd-table td {
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.help-kbd-table td:first-child {
+  width: 60px;
+  white-space: nowrap;
+}
+
+.help-kbd-table kbd {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 0.8rem;
+}

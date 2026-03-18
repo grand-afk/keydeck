@@ -19,7 +19,7 @@ function saveSettings(data) {
   }
 }
 
-// ── URL sync for platform (#1) — ?p=mac or ?p=win ─────────────────────────
+// ── URL sync for platform — ?p=mac or ?p=win ───────────────────────────────
 function getPlatformFromUrl() {
   try {
     return new URLSearchParams(window.location.search).get('p') || null
@@ -53,6 +53,8 @@ export function useSettings() {
   const platform       = settings.platform       ?? 'mac'
   const selectedApps   = settings.selectedApps   ?? []
   const showFavourites = settings.showFavourites  ?? false
+  const darkMode       = settings.darkMode        ?? true   // default: dark
+  const showRateCol    = settings.showRateCol     ?? true   // default: visible
 
   // Keep URL param in sync
   useEffect(() => { setPlatformInUrl(platform) }, [platform])
@@ -73,5 +75,21 @@ export function useSettings() {
     [showFavourites, update],
   )
 
-  return { platform, setPlatform, selectedApps, toggleApp, showFavourites, toggleShowFavourites }
+  const toggleDarkMode = useCallback(
+    () => update({ darkMode: !darkMode }),
+    [darkMode, update],
+  )
+
+  const toggleRateCol = useCallback(
+    () => update({ showRateCol: !showRateCol }),
+    [showRateCol, update],
+  )
+
+  return {
+    platform, setPlatform,
+    selectedApps, toggleApp,
+    showFavourites, toggleShowFavourites,
+    darkMode, toggleDarkMode,
+    showRateCol, toggleRateCol,
+  }
 }

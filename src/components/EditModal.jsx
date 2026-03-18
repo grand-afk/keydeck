@@ -123,7 +123,7 @@ export default function EditModal({ shortcut, onClose }) {
               className="form-input"
               value={context}
               onChange={(e) => setContext(e.target.value)}
-              placeholder="Extra hint shown on card"
+              placeholder="e.g. Only works when a cell is selected"
             />
           </label>
         </div>

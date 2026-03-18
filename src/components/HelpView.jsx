@@ -1,25 +1,18 @@
-/**
- * HelpView — mirrors the README content.
- * Keep this in sync with README.md when you update it.
- */
 export default function HelpView() {
   return (
     <div className="help-view">
       <h1 className="help-title">⌨️ KeyDeck</h1>
       <p className="help-lead">
-        A spaced-repetition keyboard shortcut trainer for power users.
-        Learn Excel, PowerPoint, Google Workspace, Slack, Vimium, Obsidian,
-        Windows Desktop shortcuts — on Mac <em>and</em> Windows.
+        A spaced-repetition keyboard shortcut trainer. Learn shortcuts for Excel, PowerPoint,
+        Gmail, Google Drive, Slack, Chrome, Obsidian, Windows PowerToys and more — on Mac <em>and</em> Windows.
       </p>
 
       <section className="help-section">
         <h2>How it works</h2>
         <p>
-          KeyDeck uses the <strong>SM-2 algorithm</strong> (the same one Anki uses) to
-          schedule each shortcut at the optimal moment for long-term memory. The more
-          reliably you recall a shortcut, the longer the gap before it appears again.
+          KeyDeck uses the <strong>SM-2 algorithm</strong> (the same one Anki uses) to schedule
+          each shortcut at the optimal moment for long-term memory. Rate each card honestly:
         </p>
-        <p>Rate each card honestly:</p>
         <ul>
           <li><strong>Again</strong> — you drew a blank. Resets the card.</li>
           <li><strong>Hard</strong> — you got it but it took real effort.</li>
@@ -29,48 +22,106 @@ export default function HelpView() {
       </section>
 
       <section className="help-section">
-        <h2>Modes</h2>
+        <h2>Views</h2>
         <ul>
           <li>
-            <strong>Practice</strong> — Your daily review queue. Cards due today
-            appear here; when the queue is empty you're done for the day.
+            <strong>⌨️ Shortcuts [1]</strong> — Full reference table, paginated 10/page.
+            Sortable by any column. Use <strong>+ Add</strong> to create your own shortcuts.
           </li>
           <li>
-            <strong>Discover</strong> — Random shortcuts you haven't seen yet.
-            Great for expanding what you know. Rating a Discover card adds it to
-            your Practice deck automatically.
+            <strong>📖 Practise [2]</strong> — Your daily review queue. Up to 10 shortcuts
+            due today appear here; rate them all to complete the session.
           </li>
           <li>
-            <strong>Search</strong> — Find any shortcut by action, category, or
-            key combination. Useful when you need to look something up quickly.
+            <strong>🎲 Discover [3]</strong> — A fresh batch of shortcuts you haven't seen
+            yet. Rating a card adds it to your Practise deck automatically. Hit 🎲 for a
+            new batch.
+          </li>
+          <li>
+            <strong>❓ Help [4]</strong> — You're here.
           </li>
         </ul>
       </section>
 
       <section className="help-section">
-        <h2>Switching platforms</h2>
+        <h2>Top bar icons</h2>
+        <ul>
+          <li><strong>🔍 [/]</strong> — Open inline search. Filters the current view as you type.</li>
+          <li><strong>⭐ [F]</strong> — Toggle favourites filter. Shows only starred shortcuts.</li>
+          <li><strong>🚩</strong> — Open the flagged-for-review modal. Lists all shortcuts you've marked with 🚩.</li>
+          <li><strong>☀️ / 🌙</strong> — Switch between light and dark mode.</li>
+          <li><strong>⬇️</strong> — Export your progress and overrides as a JSON backup.</li>
+          <li><strong>⬆️</strong> — Import a previously exported backup.</li>
+        </ul>
+      </section>
+
+      <section className="help-section">
+        <h2>Platform toggle</h2>
         <p>
-          Use the <strong>🍎 / ⊞</strong> toggle in the top bar to switch between
-          Mac and Windows shortcuts at any time. Your progress is shared across
-          both platforms.
+          Use the <strong>Mac / Win</strong> toggle (top left) to switch between Mac and
+          Windows shortcuts at any time. Your progress is shared across both platforms.
+          Keyboard shortcut: <kbd>M</kbd> for Mac, <kbd>W</kbd> for Windows.
         </p>
+      </section>
+
+      <section className="help-section">
+        <h2>Keyboard shortcuts</h2>
+        <table className="help-kbd-table">
+          <tbody>
+            <tr><td><kbd>1</kbd></td><td>Go to Shortcuts</td></tr>
+            <tr><td><kbd>2</kbd></td><td>Go to Practise</td></tr>
+            <tr><td><kbd>3</kbd></td><td>Go to Discover</td></tr>
+            <tr><td><kbd>4</kbd></td><td>Go to Help</td></tr>
+            <tr><td><kbd>M</kbd></td><td>Switch to Mac platform</td></tr>
+            <tr><td><kbd>W</kbd></td><td>Switch to Windows platform</td></tr>
+            <tr><td><kbd>F</kbd></td><td>Toggle favourites filter</td></tr>
+            <tr><td><kbd>/</kbd></td><td>Open search</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Close search / modal</td></tr>
+            <tr><td><kbd>X</kbd></td><td>Toggle Excel filter</td></tr>
+            <tr><td><kbd>P</kbd></td><td>Toggle PowerPoint filter</td></tr>
+            <tr><td><kbd>G</kbd></td><td>Toggle Gmail filter</td></tr>
+            <tr><td><kbd>C</kbd></td><td>Toggle Chat filter</td></tr>
+            <tr><td><kbd>A</kbd></td><td>Toggle Calendar filter</td></tr>
+            <tr><td><kbd>T</kbd></td><td>Toggle Tasks filter</td></tr>
+            <tr><td><kbd>D</kbd></td><td>Toggle Drive filter</td></tr>
+            <tr><td><kbd>N</kbd></td><td>Toggle Desktop filter</td></tr>
+            <tr><td><kbd>Y</kbd></td><td>Toggle PowerToys filter</td></tr>
+            <tr><td><kbd>K</kbd></td><td>Toggle Slack filter</td></tr>
+            <tr><td><kbd>V</kbd></td><td>Toggle Vimium filter</td></tr>
+            <tr><td><kbd>O</kbd></td><td>Toggle Obsidian filter</td></tr>
+            <tr><td><kbd>R</kbd></td><td>Toggle Chrome filter</td></tr>
+            <tr><td><kbd>B</kbd></td><td>Toggle Bookmarks filter</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section className="help-section">
+        <h2>Row actions</h2>
+        <ul>
+          <li><strong>⭐</strong> — Star a shortcut as a favourite.</li>
+          <li><strong>🚩</strong> — Flag a shortcut for review/correction (shows in the 🚩 modal).</li>
+          <li><strong>🖊️</strong> — Edit the shortcut's action, keys, category, or context note inline.</li>
+          <li><strong>Rate column</strong> — Click the Rate header to hide/show the column. Hover over the header for a description of each rating.</li>
+          <li><strong>Context tooltip</strong> — Hover over any shortcut badge to see its context note, if one exists.</li>
+        </ul>
       </section>
 
       <section className="help-section">
         <h2>Filtering apps</h2>
         <p>
-          Tap any app chip in the top bar to focus on just that application.
-          Select multiple chips to practise a custom mix. Tap <strong>All</strong>{' '}
-          to return to the full deck.
+          Tap any app chip to focus on just that application. Select multiple chips to
+          practise a custom mix. Tap <strong>All</strong> to return to the full deck.
+          Each chip has a letter shortcut shown in small brackets.
         </p>
       </section>
 
       <section className="help-section">
         <h2>Adding your own shortcuts</h2>
         <p>
-          Edit <code>src/data/custom.json</code> to add your own bookmark shortcuts
-          or any other bindings that aren't already in the library. Follow the same
-          JSON schema as the other data files.
+          Use the <strong>+ Add</strong> button on the Shortcuts page to create custom shortcuts
+          stored in your browser. They appear immediately and are included in exports.
+          You can also edit <code>src/data/custom.json</code> to add shortcuts that ship
+          with the app for everyone.
         </p>
       </section>
 
@@ -79,47 +130,32 @@ export default function HelpView() {
         <ul>
           <li>📊 <strong>Excel</strong> — navigation, formulas, formatting, workbook management</li>
           <li>📽️ <strong>PowerPoint</strong> — slides, text, objects, presenter mode</li>
-          <li>🔵 <strong>Google Workspace</strong> — Docs, Sheets, and Slides</li>
+          <li>📧 <strong>Gmail</strong> — compose, reply, archive, labels, navigation</li>
+          <li>🗨️ <strong>Google Chat</strong> — navigation, messaging, formatting</li>
+          <li>📅 <strong>Google Calendar</strong> — events, views, navigation</li>
+          <li>✅ <strong>Google Tasks</strong> — tasks, navigation</li>
+          <li>📁 <strong>Google Drive</strong> — navigation, selection, file actions</li>
           <li>🖥️ <strong>Desktop</strong> — Windows snapping, virtual desktops, system shortcuts</li>
+          <li>⚙️ <strong>PowerToys</strong> — Run, FancyZones, Color Picker, Text Extractor and more</li>
           <li>💬 <strong>Slack</strong> — navigation, messaging, formatting</li>
           <li>🌐 <strong>Vimium</strong> — browser navigation, tabs, link hints, find mode</li>
           <li>🔮 <strong>Obsidian</strong> — notes, editor, search, layout</li>
-          <li>🔖 <strong>Bookmarks</strong> — your custom shortcuts (edit <code>custom.json</code>)</li>
+          <li>🟡 <strong>Chrome</strong> — tabs, navigation, bookmarks, developer tools</li>
+          <li>🔖 <strong>Bookmarks</strong> — your custom shortcuts</li>
         </ul>
-      </section>
-
-      <section className="help-section">
-        <h2>Sequence shortcuts</h2>
-        <p>
-          Some shortcuts require pressing keys one after another (e.g. Vimium's{' '}
-          <code>gg</code> or <code>g0</code>). These are labelled with a{' '}
-          <strong>Sequence</strong> badge so you know to type them in order, not
-          simultaneously.
-        </p>
       </section>
 
       <section className="help-section">
         <h2>Data &amp; privacy</h2>
         <p>
-          All progress and settings are stored locally in your browser's{' '}
+          All progress, settings, and custom shortcuts are stored locally in your browser's{' '}
           <code>localStorage</code>. Nothing is sent to any server.
-        </p>
-      </section>
-
-      <section className="help-section">
-        <h2>Contributing</h2>
-        <p>
-          PRs welcome! Add shortcuts by editing the relevant JSON file in{' '}
-          <code>src/data/</code>. Each shortcut needs: <code>id</code>,{' '}
-          <code>cat</code>, <code>action</code>, <code>mac</code>, <code>win</code>,{' '}
-          and <code>priority</code> (1 = essential, 2 = useful, 3 = advanced).
+          Use ⬇️ to export a backup and ⬆️ to restore it.
         </p>
       </section>
 
       <footer className="help-footer">
-        <p>
-          Made with the SM-2 algorithm · stores data locally · open source on GitHub
-        </p>
+        <p>Made with the SM-2 algorithm · stores data locally · open source on GitHub</p>
       </footer>
     </div>
   )

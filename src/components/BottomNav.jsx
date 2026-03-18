@@ -1,11 +1,10 @@
-// Tabs: Practice removed (#3). Shortcuts added as first tab (#6).
-// kbd hints shown on desktop/iPad, hidden on mobile (#4).
+// Search moved to inline overlay in TopBar — only 4 tabs remain.
+// 'study' renamed to 'practise'. Shortcuts icon changed to ⌨️.
 const TABS = [
-  { id: 'shortcuts', icon: '⭐', label: 'Shortcuts', key: '1' },
-  { id: 'study',     icon: '📋', label: 'Study',     key: '2' },
+  { id: 'shortcuts', icon: '⌨️', label: 'Shortcuts', key: '1' },
+  { id: 'practise',  icon: '📖', label: 'Practise',  key: '2' },
   { id: 'discover',  icon: '🎲', label: 'Discover',  key: '3' },
-  { id: 'search',    icon: '🔍', label: 'Search',    key: '4' },
-  { id: 'help',      icon: '📖', label: 'Help',      key: '5' },
+  { id: 'help',      icon: '❓', label: 'Help',      key: '4' },
 ]
 
 export default function BottomNav({ view, setView }) {
