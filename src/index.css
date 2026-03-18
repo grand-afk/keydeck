@@ -771,12 +771,17 @@ body {
   font-size: 0.6rem;
   padding: 1px 4px;
   border-radius: 3px;
-  border: 1px solid currentColor;
-  opacity: 0.55;
+  border: 1px solid rgba(255,255,255,0.5);
+  opacity: 0.85;
+  color: #fff;
   font-family: 'SF Mono', 'Fira Code', monospace;
   vertical-align: middle;
   line-height: 1.4;
   pointer-events: none;
+}
+:root.light .kbd-hint {
+  color: #000;
+  border-color: rgba(0,0,0,0.4);
 }
 
 @media (max-width: 767px) {
