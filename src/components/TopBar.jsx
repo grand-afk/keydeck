@@ -168,6 +168,16 @@ export default function TopBar({
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Escape') onToggleSearch() }}
+            onBlur={() => {
+              // iOS Safari stays zoomed after the keyboard dismisses.
+              // Briefly adding maximum-scale=1 snaps it back without
+              // permanently blocking pinch-to-zoom.
+              const vp = document.querySelector('meta[name="viewport"]')
+              if (!vp || vp.content.includes('maximum-scale')) return
+              const orig = vp.content
+              vp.content = orig + ', maximum-scale=1'
+              setTimeout(() => { vp.content = orig }, 300)
+            }}
             autoComplete="off"
             autoCorrect="off"
             spellCheck={false}

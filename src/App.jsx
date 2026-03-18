@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { getShortcuts, getAllShortcuts, APPS } from './data/index'
 import { useProgress } from './hooks/useProgress'
 import { useSettings } from './hooks/useSettings'
@@ -14,6 +14,19 @@ import FlaggedModal from './components/FlaggedModal'
 // Search tab removed — search is now an inline overlay via 🔍 in TopBar
 // 'study' renamed to 'practise' throughout
 const VIEWS = ['shortcuts', 'practise', 'discover', 'help', 'settings']
+
+// ── iOS zoom reset ────────────────────────────────────────────────────────
+// iOS Safari stays zoomed after an input is dismissed. Briefly adding
+// maximum-scale=1 forces it to snap back, then we remove the restriction
+// so pinch-to-zoom still works normally.
+function resetIOSZoom() {
+  const viewport = document.querySelector('meta[name="viewport"]')
+  if (!viewport) return
+  const orig = viewport.content
+  if (orig.includes('maximum-scale')) return   // already set externally
+  viewport.content = orig + ', maximum-scale=1'
+  setTimeout(() => { viewport.content = orig }, 300)
+}
 
 export default function App() {
   const [view, setView] = useState('shortcuts')
@@ -65,14 +78,27 @@ export default function App() {
       : shortcuts
   }, [shortcuts, searchQuery, showFavourites, progress])
 
+  // ── Close search + reset iOS zoom ─────────────────────────────────────
+  const closeSearch = useCallback(() => {
+    setSearchOpen(false)
+    setSearchQuery('')
+    resetIOSZoom()
+  }, [])
+
+  // Navigate to a view — always clears search so the tab switch is visible
+  const navigateTo = useCallback((v) => {
+    closeSearch()
+    setView(v)
+  }, [closeSearch])
+
   // ── Global keyboard shortcuts ─────────────────────────────────────────────
   useEffect(() => {
     function onKey(e) {
       const tag = e.target.tagName
       // Allow Escape everywhere (to close search/modals)
       if (e.key === 'Escape') {
-        if (searchOpen) { setSearchOpen(false); setSearchQuery('') }
-        if (flaggedOpen) setFlaggedOpen(false)
+        if (searchOpen) { closeSearch(); return }
+        if (flaggedOpen) { setFlaggedOpen(false); return }
         return
       }
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
@@ -88,18 +114,18 @@ export default function App() {
       switch (e.key) {
         case 'm': case 'M': setPlatform('mac'); break
         case 'w': case 'W': setPlatform('win'); break
-        case '1': setView(VIEWS[0]); break
-        case '2': setView(VIEWS[1]); break
-        case '3': setView(VIEWS[2]); break
-        case '4': setView(VIEWS[3]); break
-        case '5': setView(VIEWS[4]); break
+        case '1': navigateTo(VIEWS[0]); break
+        case '2': navigateTo(VIEWS[1]); break
+        case '3': navigateTo(VIEWS[2]); break
+        case '4': navigateTo(VIEWS[3]); break
+        case '5': navigateTo(VIEWS[4]); break
         case 'f': case 'F': toggleShowFavourites(); break
         default: break
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [setPlatform, toggleShowFavourites, toggleApp, searchOpen, flaggedOpen])
+  }, [setPlatform, toggleShowFavourites, toggleApp, searchOpen, flaggedOpen, closeSearch, navigateTo])
 
   // Common props shared by all table views
   const tableProps = {
@@ -112,8 +138,9 @@ export default function App() {
     toggleRateCol,
   }
 
-  // When search is active, always show ShortcutsView with results
   const isSearchActive = searchQuery.trim().length > 0
+  // While search is active highlight the Shortcuts tab in the nav
+  const activeView = isSearchActive ? 'shortcuts' : view
 
   return (
     <div className="app">
@@ -133,7 +160,7 @@ export default function App() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onToggleSearch={() => {
-          if (searchOpen) { setSearchOpen(false); setSearchQuery('') }
+          if (searchOpen) closeSearch()
           else setSearchOpen(true)
         }}
         onOpenFlagged={() => setFlaggedOpen(true)}
@@ -188,7 +215,8 @@ export default function App() {
         )}
       </main>
 
-      <BottomNav view={view} setView={setView} />
+      {/* navigateTo clears search before switching view */}
+      <BottomNav view={activeView} setView={navigateTo} />
 
       {flaggedOpen && (
         <FlaggedModal
