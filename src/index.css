@@ -29,14 +29,15 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg);
   color: var(--text);
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;  /* body never scrolls — only .main-content does */
 }
 
 /* ── App shell ── */
 .app {
   width: 100%;
   max-width: 900px;
-  min-height: 100dvh;
+  height: 100dvh;    /* exact viewport height so top-bar + bottom-nav are always visible */
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -154,6 +155,7 @@ body {
 ───────────────────────────────────────────────────────────────────────────── */
 .main-content {
   flex: 1;
+  min-height: 0;     /* allows flex child to shrink so overflow-y scroll actually fires */
   overflow-y: auto;
   padding: 16px;
 }
@@ -302,10 +304,10 @@ body {
 
 /* Rating buttons */
 .rating-buttons {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* 2×2 grid on all screen sizes */
   gap: 8px;
   width: 100%;
-  flex-wrap: wrap;
 }
 
 .rate-btn {
@@ -742,8 +744,7 @@ body {
   .rate-btn { padding: 8px 4px; }
   .rate-sub { display: none; }   /* hide subtitle on small screens */
 
-  /* Stack rate buttons into 2×2 grid on tiny screens */
-  .rating-buttons { display: grid; grid-template-columns: 1fr 1fr; }
+
 
   /* Study table — hide category column */
   .study-cell--cat, .study-table th:nth-child(2) { display: none; }
@@ -984,8 +985,10 @@ select.form-input {
 :root.light .shortcut-badge { background: var(--surface2); color: var(--text); border-color: var(--border); }
 :root.light .icon-btn     { border-color: var(--border); color: var(--text-muted); }
 :root.light .icon-btn:hover { background: var(--surface2); color: var(--text); }
-:root.light .app-chip     { border-color: var(--border); color: var(--text-muted); }
-:root.light .app-chip:hover { background: var(--surface2); color: var(--text); }
+:root.light .app-chip               { border-color: var(--border); color: var(--text-muted); }
+:root.light .app-chip:hover         { background: var(--surface2); color: var(--text); }
+:root.light .app-chip--active       { color: #fff; }  /* keep white text on accent bg */
+:root.light .app-chip--active:hover { color: #fff; }
 :root.light .platform-btn { color: var(--text-muted); }
 :root.light .platform-btn:not(.platform-btn--active):hover { background: var(--surface2); }
 :root.light .form-input   { background: var(--surface2); border-color: var(--border); color: var(--text); }
