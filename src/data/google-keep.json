@@ -1,0 +1,17 @@
+[
+  { "id": "gkeep-001", "cat": "Create",     "action": "New text note",                   "mac": "C",          "win": "C",              "context": "Note list" },
+  { "id": "gkeep-002", "cat": "Create",     "action": "New list note",                   "mac": "L",          "win": "L",              "context": "Note list" },
+  { "id": "gkeep-003", "cat": "Create",     "action": "New drawing note",                "mac": "D",          "win": "D",              "context": "Note list" },
+  { "id": "gkeep-004", "cat": "Note",       "action": "Archive note",                    "mac": "E",          "win": "E",              "context": "Note focused" },
+  { "id": "gkeep-005", "cat": "Note",       "action": "Delete / move to trash",          "mac": "⌫",          "win": "Delete",         "context": "Note focused" },
+  { "id": "gkeep-006", "cat": "Note",       "action": "Pin / unpin note",                "mac": "P",          "win": "P",              "context": "Note focused" },
+  { "id": "gkeep-007", "cat": "Note",       "action": "Add or remove label",             "mac": "T",          "win": "T",              "context": "Note focused" },
+  { "id": "gkeep-008", "cat": "Note",       "action": "Change note colour",              "mac": "⇧C",        "win": "Shift+C",        "context": "Note focused" },
+  { "id": "gkeep-009", "cat": "View",       "action": "Toggle list / grid view",         "mac": "V",          "win": "V",              "context": "Note list" },
+  { "id": "gkeep-010", "cat": "Search",     "action": "Open search",                     "mac": "/",          "win": "/",              "context": "Note list" },
+  { "id": "gkeep-011", "cat": "Navigation", "action": "Move to next note",               "mac": "J",          "win": "J",              "context": "Note list" },
+  { "id": "gkeep-012", "cat": "Navigation", "action": "Move to previous note",           "mac": "K",          "win": "K",              "context": "Note list" },
+  { "id": "gkeep-013", "cat": "Navigation", "action": "Open selected note",              "mac": "↩",          "win": "Enter",          "context": "Note focused" },
+  { "id": "gkeep-014", "cat": "Navigation", "action": "Close note / back to list",       "mac": "Esc",        "win": "Esc",            "context": "Note open" },
+  { "id": "gkeep-015", "cat": "Edit",       "action": "Undo",                            "mac": "⌘Z",         "win": "Ctrl+Z",         "context": "Editing note" }
+]

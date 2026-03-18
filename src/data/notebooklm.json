@@ -1,0 +1,12 @@
+[
+  { "id": "nblm-001", "cat": "Chat",       "action": "Send message / submit prompt",     "mac": "↩",          "win": "Enter",          "context": "Chat input" },
+  { "id": "nblm-002", "cat": "Chat",       "action": "New line in message",              "mac": "⇧↩",        "win": "Shift+Enter",    "context": "Chat input" },
+  { "id": "nblm-003", "cat": "Chat",       "action": "Stop generating response",         "mac": "Esc",        "win": "Esc",            "context": "Generating" },
+  { "id": "nblm-004", "cat": "Edit",       "action": "Undo in text editor",              "mac": "⌘Z",         "win": "Ctrl+Z",         "context": "Note editor" },
+  { "id": "nblm-005", "cat": "Edit",       "action": "Redo",                             "mac": "⌘⇧Z",       "win": "Ctrl+Shift+Z",   "context": "Note editor" },
+  { "id": "nblm-006", "cat": "Edit",       "action": "Select all",                       "mac": "⌘A",         "win": "Ctrl+A",         "context": "Note editor" },
+  { "id": "nblm-007", "cat": "Format",     "action": "Bold",                             "mac": "⌘B",         "win": "Ctrl+B",         "context": "Note editor" },
+  { "id": "nblm-008", "cat": "Format",     "action": "Italic",                           "mac": "⌘I",         "win": "Ctrl+I",         "context": "Note editor" },
+  { "id": "nblm-009", "cat": "Edit",       "action": "Copy selected text",               "mac": "⌘C",         "win": "Ctrl+C",         "context": "Note editor" },
+  { "id": "nblm-010", "cat": "Navigation", "action": "Find in page",                     "mac": "⌘F",         "win": "Ctrl+F",         "context": "Any" }
+]

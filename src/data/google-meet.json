@@ -1,0 +1,16 @@
+[
+  { "id": "gmeet-001", "cat": "Audio",      "action": "Mute / unmute microphone",       "mac": "⌘D",         "win": "Ctrl+D",         "context": "During a call" },
+  { "id": "gmeet-002", "cat": "Video",      "action": "Turn camera on / off",            "mac": "⌘E",         "win": "Ctrl+E",         "context": "During a call" },
+  { "id": "gmeet-003", "cat": "Reactions",  "action": "Raise / lower hand",              "mac": "⌘⌥H",       "win": "Ctrl+Alt+H",     "context": "During a call" },
+  { "id": "gmeet-004", "cat": "Captions",   "action": "Toggle captions",                 "mac": "⌘⇧C",       "win": "Ctrl+Shift+C",   "context": "During a call" },
+  { "id": "gmeet-005", "cat": "Panel",      "action": "Open in-call chat",               "mac": "⌘⌥C",       "win": "Ctrl+Alt+C",     "context": "During a call" },
+  { "id": "gmeet-006", "cat": "Panel",      "action": "Open participants panel",          "mac": "⌘⌥P",       "win": "Ctrl+Alt+P",     "context": "During a call" },
+  { "id": "gmeet-007", "cat": "View",       "action": "Toggle tile / spotlight view",    "mac": "⌘⌥T",       "win": "Ctrl+Alt+T",     "context": "During a call" },
+  { "id": "gmeet-008", "cat": "Present",    "action": "Start / stop presenting screen",  "mac": "⌘⌥S",       "win": "Ctrl+Alt+S",     "context": "During a call" },
+  { "id": "gmeet-009", "cat": "Navigation", "action": "Focus main call area",            "mac": "⌘⌥M",       "win": "Ctrl+Alt+M",     "context": "During a call" },
+  { "id": "gmeet-010", "cat": "Navigation", "action": "Focus microphone button",         "mac": "⌘⌥A",       "win": "Ctrl+Alt+A",     "context": "During a call" },
+  { "id": "gmeet-011", "cat": "Reactions",  "action": "Send a reaction / emoji",         "mac": "⌘⌥E",       "win": "Ctrl+Alt+E",     "context": "During a call" },
+  { "id": "gmeet-012", "cat": "Navigation", "action": "Cycle focus through buttons",     "mac": "Tab",        "win": "Tab",            "context": "During a call" },
+  { "id": "gmeet-013", "cat": "Navigation", "action": "Activate focused button",         "mac": "Space",      "win": "Space",          "context": "During a call" },
+  { "id": "gmeet-014", "cat": "Audio",      "action": "Push to talk (hold to unmute)",   "mac": "Space (hold)","win": "Space (hold)",  "context": "While muted" }
+]

@@ -6,9 +6,16 @@ import googleCal    from './google-calendar.json'
 import googleTasks  from './google-tasks.json'
 import googleDocs   from './google-docs.json'
 import googleSheets from './google-sheets.json'
+import googleSlides from './google-slides.json'
 import googleDrive  from './google-drive.json'
+import googleMeet   from './google-meet.json'
+import googleKeep   from './google-keep.json'
+import gemini       from './gemini.json'
+import notebooklm   from './notebooklm.json'
 import windows      from './windows.json'
 import word         from './word.json'
+import outlook      from './outlook.json'
+import teams        from './teams.json'
 import powertoys    from './powertoys.json'
 import slack        from './slack.json'
 import vimium       from './vimium.json'
@@ -16,30 +23,48 @@ import obsidian     from './obsidian.json'
 import chrome       from './chrome.json'
 import custom       from './custom.json'
 
-// ─── App metadata ──────────────────────────────────────────────────────────
-// iconUrl: uses Google's favicon service for web apps (reliable, no attribution needed)
-// Microsoft Office product icons — PNG variants from the Office brand CDN
-// (PNG avoids any text nodes present in the SVG lockup variants)
-const MS = (name) => `https://res.cdn.office.net/assets/brand-icons/product/png/${name}_48x1.png`
+// ─── Icon helpers ───────────────────────────────────────────────────────────
+// Microsoft Office / 365 product icons — PNG from the Office brand CDN
+// (PNG avoids SVG wordmark text nodes that caused the "Excel Excel" double-name bug)
+const MS = (name) =>
+  `https://res.cdn.office.net/assets/brand-icons/product/png/${name}_48x1.png`
 
+// Google Workspace product icons — served by Google's favicon API at 128 px
+// (higher res than the 64 px we used before; Google keeps these up to date)
+const GWS = (domain) =>
+  `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+
+// ─── App metadata ───────────────────────────────────────────────────────────
 export const APPS = [
-  { id: 'excel',           iconUrl: MS('excel'),        icon: '📗',                                               label: 'Excel',       key: 'X' },
-  { id: 'powerpoint',      iconUrl: MS('powerpoint'),   icon: '📕',                                               label: 'PowerPoint',  key: 'P' },
-  { id: 'gmail',           iconUrl: 'https://www.google.com/s2/favicons?domain=mail.google.com&sz=64',             label: 'Gmail',       key: 'G' },
-  { id: 'google-chat',     iconUrl: 'https://www.google.com/s2/favicons?domain=chat.google.com&sz=64',             label: 'Chat',        key: 'C' },
-  { id: 'google-calendar', iconUrl: 'https://www.google.com/s2/favicons?domain=calendar.google.com&sz=64',         label: 'Calendar',    key: 'A' },
-  { id: 'google-tasks',    iconUrl: 'https://www.google.com/s2/favicons?domain=tasks.google.com&sz=64',            label: 'Tasks',       key: 'T' },
-  { id: 'google-docs',     iconUrl: 'https://www.google.com/s2/favicons?domain=docs.google.com&sz=64',             label: 'Docs',        key: 'J' },
-  { id: 'google-sheets',   iconUrl: 'https://www.google.com/s2/favicons?domain=sheets.google.com&sz=64',           label: 'Sheets',      key: 'H' },
-  { id: 'google-drive',    iconUrl: 'https://www.google.com/s2/favicons?domain=drive.google.com&sz=64',            label: 'Drive',       key: 'D' },
-  { id: 'windows',         iconUrl: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=64',               label: 'Desktop',     key: 'N' },
-  { id: 'word',            iconUrl: MS('word'),         icon: '📘',                                               label: 'Word',        key: 'U' },
-  { id: 'powertoys',       icon: '⚙️',                                                                             label: 'PowerToys',   key: 'Y' },
-  { id: 'slack',           iconUrl: 'https://www.google.com/s2/favicons?domain=slack.com&sz=64',                   label: 'Slack',       key: 'K' },
-  { id: 'vimium',          icon: '🌐',                                                                             label: 'Vimium',      key: 'V' },
-  { id: 'obsidian',        iconUrl: 'https://www.google.com/s2/favicons?domain=obsidian.md&sz=64',                 label: 'Obsidian',    key: 'O' },
-  { id: 'chrome',          iconUrl: 'https://www.google.com/s2/favicons?domain=google.com/chrome&sz=64',           label: 'Chrome',      key: 'R' },
-  { id: 'custom',          icon: '🔖',                                                                             label: 'Bookmarks',   key: 'B' },
+  // ── Google Workspace ──────────────────────────────────────────────────────
+  { id: 'gmail',           iconUrl: GWS('mail.google.com'),          icon: '📧', label: 'Gmail',       key: 'G' },
+  { id: 'google-meet',     iconUrl: GWS('meet.google.com'),          icon: '📹', label: 'Meet',        key: 'M' },
+  { id: 'google-chat',     iconUrl: GWS('chat.google.com'),          icon: '💬', label: 'Chat',        key: 'C' },
+  { id: 'google-calendar', iconUrl: GWS('calendar.google.com'),      icon: '📅', label: 'Calendar',    key: 'A' },
+  { id: 'google-drive',    iconUrl: GWS('drive.google.com'),         icon: '💾', label: 'Drive',       key: 'D' },
+  { id: 'google-docs',     iconUrl: GWS('docs.google.com'),          icon: '📄', label: 'Docs',        key: 'J' },
+  { id: 'google-sheets',   iconUrl: GWS('sheets.google.com'),        icon: '📊', label: 'Sheets',      key: 'H' },
+  { id: 'google-slides',   iconUrl: GWS('slides.google.com'),        icon: '📽️', label: 'Slides',      key: 'S' },
+  { id: 'google-tasks',    iconUrl: GWS('tasks.google.com'),         icon: '✅', label: 'Tasks',       key: 'T' },
+  { id: 'google-keep',     iconUrl: GWS('keep.google.com'),          icon: '🟡', label: 'Keep',        key: 'E' },
+  { id: 'gemini',          iconUrl: GWS('gemini.google.com'),        icon: '✨', label: 'Gemini',      key: 'I' },
+  { id: 'notebooklm',      iconUrl: GWS('notebooklm.google.com'),    icon: '📓', label: 'NotebookLM',  key: 'L' },
+
+  // ── Microsoft 365 ─────────────────────────────────────────────────────────
+  { id: 'excel',           iconUrl: MS('excel'),                      icon: '📗', label: 'Excel',       key: 'X' },
+  { id: 'powerpoint',      iconUrl: MS('powerpoint'),                 icon: '📕', label: 'PowerPoint',  key: 'P' },
+  { id: 'word',            iconUrl: MS('word'),                       icon: '📘', label: 'Word',        key: 'U' },
+  { id: 'outlook',         iconUrl: MS('outlook'),                    icon: '📨', label: 'Outlook',     key: 'Q' },
+  { id: 'teams',           iconUrl: MS('teams'),                      icon: '👥', label: 'Teams',       key: 'F' },
+
+  // ── Other apps ────────────────────────────────────────────────────────────
+  { id: 'windows',         iconUrl: GWS('microsoft.com'),             icon: '🪟', label: 'Desktop',     key: 'N' },
+  { id: 'powertoys',       icon: '⚙️',                                            label: 'PowerToys',   key: 'Y' },
+  { id: 'slack',           iconUrl: GWS('slack.com'),                 icon: '💼', label: 'Slack',       key: 'K' },
+  { id: 'vimium',          icon: '🌐',                                            label: 'Vimium',      key: 'V' },
+  { id: 'obsidian',        iconUrl: GWS('obsidian.md'),               icon: '🔮', label: 'Obsidian',    key: 'O' },
+  { id: 'chrome',          iconUrl: GWS('google.com/chrome'),         icon: '🌐', label: 'Chrome',      key: 'R' },
+  { id: 'custom',          icon: '🔖',                                            label: 'Bookmarks',   key: 'B' },
 ]
 
 // ─── Tag each shortcut with its app id ─────────────────────────────────────
@@ -49,13 +74,20 @@ const ALL_SHORTCUTS = [
   ...tag('excel',            excel),
   ...tag('powerpoint',       powerpoint),
   ...tag('gmail',            gmail),
+  ...tag('google-meet',      googleMeet),
   ...tag('google-chat',      googleChat),
   ...tag('google-calendar',  googleCal),
   ...tag('google-tasks',     googleTasks),
   ...tag('google-docs',      googleDocs),
   ...tag('google-sheets',    googleSheets),
+  ...tag('google-slides',    googleSlides),
   ...tag('google-drive',     googleDrive),
+  ...tag('google-keep',      googleKeep),
+  ...tag('gemini',           gemini),
+  ...tag('notebooklm',       notebooklm),
   ...tag('word',             word),
+  ...tag('outlook',          outlook),
+  ...tag('teams',            teams),
   ...tag('windows',          windows),
   ...tag('powertoys',        powertoys),
   ...tag('slack',            slack),

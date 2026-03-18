@@ -1,0 +1,12 @@
+[
+  { "id": "gemini-001", "cat": "Message",    "action": "Send message",                    "mac": "↩",          "win": "Enter",          "context": "Chat input" },
+  { "id": "gemini-002", "cat": "Message",    "action": "New line in message",             "mac": "⇧↩",        "win": "Shift+Enter",    "context": "Chat input" },
+  { "id": "gemini-003", "cat": "Message",    "action": "Edit last sent message",          "mac": "↑",          "win": "↑",              "context": "Input empty" },
+  { "id": "gemini-004", "cat": "Message",    "action": "Stop generating response",        "mac": "Esc",        "win": "Esc",            "context": "Generating" },
+  { "id": "gemini-005", "cat": "Edit",       "action": "Undo",                            "mac": "⌘Z",         "win": "Ctrl+Z",         "context": "Chat input" },
+  { "id": "gemini-006", "cat": "Edit",       "action": "Redo",                            "mac": "⌘⇧Z",       "win": "Ctrl+Shift+Z",   "context": "Chat input" },
+  { "id": "gemini-007", "cat": "Edit",       "action": "Select all in input",             "mac": "⌘A",         "win": "Ctrl+A",         "context": "Chat input" },
+  { "id": "gemini-008", "cat": "Navigation", "action": "Move to beginning of input",      "mac": "⌘↑",        "win": "Ctrl+Home",      "context": "Chat input" },
+  { "id": "gemini-009", "cat": "Format",     "action": "Bold in input",                   "mac": "⌘B",         "win": "Ctrl+B",         "context": "Chat input" },
+  { "id": "gemini-010", "cat": "Format",     "action": "Italic in input",                 "mac": "⌘I",         "win": "Ctrl+I",         "context": "Chat input" }
+]
