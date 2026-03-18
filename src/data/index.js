@@ -18,24 +18,27 @@ import custom       from './custom.json'
 
 // ─── App metadata ──────────────────────────────────────────────────────────
 // iconUrl: uses Google's favicon service for web apps (reliable, no attribution needed)
+// Microsoft Fluent brand icon CDN — distinct per-product icons
+const MS = (name) => `https://res.cdn.office.net/assets/brand-icons/product/svg/${name}_48x1.svg`
+
 export const APPS = [
-  { id: 'excel',           iconUrl: 'https://www.google.com/s2/favicons?domain=excel.office.com&sz=64',           label: 'Excel',       key: 'X' },
-  { id: 'powerpoint',      iconUrl: 'https://www.google.com/s2/favicons?domain=powerpoint.office.com&sz=64',      label: 'PowerPoint',  key: 'P' },
-  { id: 'gmail',           iconUrl: 'https://www.google.com/s2/favicons?domain=mail.google.com&sz=64',            label: 'Gmail',       key: 'G' },
-  { id: 'google-chat',     iconUrl: 'https://www.google.com/s2/favicons?domain=chat.google.com&sz=64',            label: 'Chat',        key: 'C' },
-  { id: 'google-calendar', iconUrl: 'https://www.google.com/s2/favicons?domain=calendar.google.com&sz=64',        label: 'Calendar',    key: 'A' },
-  { id: 'google-tasks',    iconUrl: 'https://www.google.com/s2/favicons?domain=tasks.google.com&sz=64',           label: 'Tasks',       key: 'T' },
-  { id: 'google-docs',     iconUrl: 'https://www.google.com/s2/favicons?domain=docs.google.com&sz=64',            label: 'Docs',        key: 'J' },
-  { id: 'google-sheets',   iconUrl: 'https://www.google.com/s2/favicons?domain=sheets.google.com&sz=64',          label: 'Sheets',      key: 'H' },
-  { id: 'google-drive',    iconUrl: 'https://www.google.com/s2/favicons?domain=drive.google.com&sz=64',           label: 'Drive',       key: 'D' },
-  { id: 'windows',         iconUrl: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=64',              label: 'Desktop',     key: 'N' },
-  { id: 'word',            iconUrl: 'https://www.google.com/s2/favicons?domain=word.office.com&sz=64',            label: 'Word',        key: 'U' },
-  { id: 'powertoys',       icon: '⚙️',                                                                            label: 'PowerToys',   key: 'Y' },
-  { id: 'slack',           iconUrl: 'https://www.google.com/s2/favicons?domain=slack.com&sz=64',                  label: 'Slack',       key: 'K' },
-  { id: 'vimium',          icon: '🌐',                                                                            label: 'Vimium',      key: 'V' },
-  { id: 'obsidian',        iconUrl: 'https://www.google.com/s2/favicons?domain=obsidian.md&sz=64',                label: 'Obsidian',    key: 'O' },
-  { id: 'chrome',          iconUrl: 'https://www.google.com/s2/favicons?domain=google.com/chrome&sz=64',          label: 'Chrome',      key: 'R' },
-  { id: 'custom',          icon: '🔖',                                                                            label: 'Bookmarks',   key: 'B' },
+  { id: 'excel',           iconUrl: MS('excel'),                                                                   label: 'Excel',       key: 'X' },
+  { id: 'powerpoint',      iconUrl: MS('powerpoint'),                                                              label: 'PowerPoint',  key: 'P' },
+  { id: 'gmail',           iconUrl: 'https://www.google.com/s2/favicons?domain=mail.google.com&sz=64',             label: 'Gmail',       key: 'G' },
+  { id: 'google-chat',     iconUrl: 'https://www.google.com/s2/favicons?domain=chat.google.com&sz=64',             label: 'Chat',        key: 'C' },
+  { id: 'google-calendar', iconUrl: 'https://www.google.com/s2/favicons?domain=calendar.google.com&sz=64',         label: 'Calendar',    key: 'A' },
+  { id: 'google-tasks',    iconUrl: 'https://www.google.com/s2/favicons?domain=tasks.google.com&sz=64',            label: 'Tasks',       key: 'T' },
+  { id: 'google-docs',     iconUrl: 'https://www.google.com/s2/favicons?domain=docs.google.com&sz=64',             label: 'Docs',        key: 'J' },
+  { id: 'google-sheets',   iconUrl: 'https://www.google.com/s2/favicons?domain=sheets.google.com&sz=64',           label: 'Sheets',      key: 'H' },
+  { id: 'google-drive',    iconUrl: 'https://www.google.com/s2/favicons?domain=drive.google.com&sz=64',            label: 'Drive',       key: 'D' },
+  { id: 'windows',         iconUrl: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=64',               label: 'Desktop',     key: 'N' },
+  { id: 'word',            iconUrl: MS('word'),                                                                     label: 'Word',        key: 'U' },
+  { id: 'powertoys',       icon: '⚙️',                                                                             label: 'PowerToys',   key: 'Y' },
+  { id: 'slack',           iconUrl: 'https://www.google.com/s2/favicons?domain=slack.com&sz=64',                   label: 'Slack',       key: 'K' },
+  { id: 'vimium',          icon: '🌐',                                                                             label: 'Vimium',      key: 'V' },
+  { id: 'obsidian',        iconUrl: 'https://www.google.com/s2/favicons?domain=obsidian.md&sz=64',                 label: 'Obsidian',    key: 'O' },
+  { id: 'chrome',          iconUrl: 'https://www.google.com/s2/favicons?domain=google.com/chrome&sz=64',           label: 'Chrome',      key: 'R' },
+  { id: 'custom',          icon: '🔖',                                                                             label: 'Bookmarks',   key: 'B' },
 ]
 
 // ─── Tag each shortcut with its app id ─────────────────────────────────────

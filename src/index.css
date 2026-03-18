@@ -137,8 +137,17 @@ body {
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
-.app-chip:hover { background: var(--surface2); color: var(--text); }
+.app-chip:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }
 .app-chip--active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* ✕ remove button inside active chips */
+.app-chip__remove {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 0.65rem;
+  opacity: 0.7;
+  line-height: 1;
+}
 
 /* ─────────────────────────────────────────────────────────────────────────────
    MAIN CONTENT
