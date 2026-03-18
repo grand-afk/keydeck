@@ -30,8 +30,6 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100dvh;
-  display: flex;
-  justify-content: center;
 }
 
 /* ── App shell ── */
@@ -41,6 +39,7 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
