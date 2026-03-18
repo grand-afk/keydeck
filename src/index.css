@@ -434,7 +434,12 @@ body {
 }
 
 /* Inline rate buttons */
-.inline-rate-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+.inline-rate-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* always 2×2 — never wraps to 3+1 */
+  gap: 4px;
+  width: 100%;
+}
 
 .inline-rate-btn {
   padding: 4px 8px;
@@ -987,9 +992,12 @@ select.form-input {
 :root.light .icon-btn:hover { background: var(--surface2); color: var(--text); }
 :root.light .app-chip               { border-color: var(--border); color: var(--text-muted); }
 :root.light .app-chip:hover         { background: var(--surface2); color: var(--text); }
-:root.light .app-chip--active       { color: #fff; }  /* keep white text on accent bg */
-:root.light .app-chip--active:hover { color: #fff; }
-:root.light .platform-btn { color: var(--text-muted); }
+:root.light .app-chip--active,
+:root.light .app-chip--active:hover { color: #fff; }                 /* keep white text on accent bg */
+:root.light .app-chip--active .kbd-hint { color: #fff; border-color: rgba(255,255,255,0.5); }  /* kbd inside active chip */
+:root.light .platform-btn                   { color: var(--text-muted); }
+:root.light .platform-btn--active           { color: #fff; }         /* Mac/Win active = white text */
+:root.light .platform-btn--active .kbd-hint { color: #fff; border-color: rgba(255,255,255,0.5); }
 :root.light .platform-btn:not(.platform-btn--active):hover { background: var(--surface2); }
 :root.light .form-input   { background: var(--surface2); border-color: var(--border); color: var(--text); }
 :root.light .search-bar-input { background: var(--surface2); color: var(--text); }
@@ -998,6 +1006,17 @@ select.form-input {
    MOBILE FIXES — prevent left-side cropping
 ═══════════════════════════════════════════════════════════════════════════ */
 html, body { overflow-x: hidden; }
+
+/* ── iOS zoom prevention ──────────────────────────────────────────────────
+   iOS Safari zooms the viewport when a focused <input>/<select>/<textarea>
+   has font-size < 16px.  Forcing 16px minimum prevents this without
+   touching the visual size (the surrounding rem cascade keeps text proportional).
+   Only applies on touch devices so desktop appearance is unchanged. */
+@media (hover: none) and (pointer: coarse) {
+  input, textarea, select {
+    font-size: max(16px, 1em) !important;
+  }
+}
 
 .app { min-width: 0; overflow-x: hidden; }
 

@@ -90,7 +90,7 @@ export default function TopBar({
             title="Search shortcuts [/]"
             aria-pressed={searchOpen}
           >
-            🔍
+            🔍<kbd className="kbd-hint">/</kbd>
           </button>
 
           {/* Favourites — left of the right-side cluster */}
