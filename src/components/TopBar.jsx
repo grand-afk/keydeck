@@ -11,6 +11,7 @@ export default function TopBar({
   setPlatform,
   selectedApps,
   toggleApp,
+  clearAllApps,
   hiddenApps,
   showFavourites,
   toggleShowFavourites,
@@ -76,10 +77,10 @@ export default function TopBar({
             className={`platform-btn ${platform === 'win' ? 'platform-btn--active' : ''}`}
             onClick={() => setPlatform('win')}
             aria-pressed={platform === 'win'}
-            title="Switch to Windows shortcuts"
+            title="Switch to Windows shortcuts [W]"
           >
             <img src={WIN_ICON} className="platform-icon" alt="" />
-            Win
+            Win<kbd className="kbd-hint">W</kbd>
           </button>
         </div>
 
@@ -135,7 +136,7 @@ export default function TopBar({
       <div className="app-filters" role="group" aria-label="Filter by app">
         <button
           className={`app-chip ${selectedApps.length === 0 ? 'app-chip--active' : ''}`}
-          onClick={() => selectedApps.forEach((id) => toggleApp(id))}
+          onClick={clearAllApps}
           title="Show all apps"
         >
           All

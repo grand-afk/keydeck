@@ -81,6 +81,7 @@ body {
   cursor: pointer;
   font-size: 0.85rem;
   font-weight: 500;
+  touch-action: manipulation;
   transition: background 0.15s, color 0.15s;
 }
 
@@ -135,6 +136,7 @@ body {
   font-size: 0.8rem;
   cursor: pointer;
   white-space: nowrap;
+  touch-action: manipulation; /* prevents iOS 300ms tap delay and double-tap zoom */
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 

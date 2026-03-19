@@ -196,7 +196,7 @@ export default function SettingsView({
                   alt=""
                   className="platform-icon"
                 />
-                Windows
+                Windows <kbd className="kbd-hint">W</kbd>
               </button>
             </div>
           </div>

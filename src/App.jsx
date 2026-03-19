@@ -116,10 +116,10 @@ export default function App() {
       if (appByKey) { toggleApp(appByKey.id); return }
 
       switch (e.key) {
-        // M = Mac platform (uncontested — Meet moved to Z)
+        // M = Mac platform; W = Win platform
+        // (Desktop/Windows app chip has no default key so W is free for platform switching)
         case 'm': case 'M': setPlatform('mac'); break
-        // W removed: Desktop app now uses W as its chip key
-        // Win platform has no keyboard shortcut; use the button in TopBar or Settings
+        case 'w': case 'W': setPlatform('win'); break
         case '1': navigateTo(VIEWS[0]); break
         case '2': navigateTo(VIEWS[1]); break
         case '3': navigateTo(VIEWS[2]); break
@@ -156,6 +156,7 @@ export default function App() {
         setPlatform={setPlatform}
         selectedApps={selectedApps}
         toggleApp={toggleApp}
+        clearAllApps={() => setSelectedApps([])}
         hiddenApps={hiddenApps}
         showFavourites={showFavourites}
         toggleShowFavourites={toggleShowFavourites}

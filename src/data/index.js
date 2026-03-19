@@ -61,7 +61,7 @@ export const APPS = [
   { id: 'teams',           iconUrl: MS('teams'),                      icon: '👥', label: 'Teams',       key: 'B' },
 
   // ── Other apps ────────────────────────────────────────────────────────────
-  { id: 'windows',         iconUrl: MS('windows'),                    icon: '🪟', label: 'Desktop',     key: 'W' },
+  { id: 'windows',         iconUrl: MS('windows'),                    icon: '🪟', label: 'Desktop'            },
   { id: 'powertoys',       icon: '⚙️',                                            label: 'PowerToys',   key: 'Y' },
   { id: 'slack',           iconUrl: GWS('slack.com'),                 icon: '💼', label: 'Slack',       key: 'K' },
   { id: 'vimium',          icon: '🌐',                                            label: 'Vimium',      key: 'V' },
