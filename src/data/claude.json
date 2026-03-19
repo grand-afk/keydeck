@@ -1,0 +1,18 @@
+[
+  { "id": "claude-001", "cat": "Message",    "action": "Send message",                    "mac": "↩",          "win": "Enter",          "context": "Chat input" },
+  { "id": "claude-002", "cat": "Message",    "action": "New line in message",             "mac": "⇧↩",        "win": "Shift+Enter",    "context": "Chat input" },
+  { "id": "claude-003", "cat": "Message",    "action": "Edit last sent message",          "mac": "↑",          "win": "↑",              "context": "Input empty" },
+  { "id": "claude-004", "cat": "Message",    "action": "Stop generating response",        "mac": "Esc",        "win": "Esc",            "context": "Generating" },
+  { "id": "claude-005", "cat": "Navigation", "action": "New conversation",                "mac": "⌘⇧O",       "win": "Ctrl+Shift+O",   "context": "Anywhere" },
+  { "id": "claude-006", "cat": "Navigation", "action": "Search / switch conversations",   "mac": "⌘K",         "win": "Ctrl+K",         "context": "Anywhere" },
+  { "id": "claude-007", "cat": "Navigation", "action": "Show keyboard shortcuts",         "mac": "⌘/",         "win": "Ctrl+/",         "context": "Anywhere" },
+  { "id": "claude-008", "cat": "Format",     "action": "Bold",                            "mac": "⌘B",         "win": "Ctrl+B",         "context": "Chat input" },
+  { "id": "claude-009", "cat": "Format",     "action": "Italic",                          "mac": "⌘I",         "win": "Ctrl+I",         "context": "Chat input" },
+  { "id": "claude-010", "cat": "Format",     "action": "Inline code",                     "mac": "⌘E",         "win": "Ctrl+E",         "context": "Chat input" },
+  { "id": "claude-011", "cat": "Edit",       "action": "Undo",                            "mac": "⌘Z",         "win": "Ctrl+Z",         "context": "Chat input" },
+  { "id": "claude-012", "cat": "Edit",       "action": "Redo",                            "mac": "⌘⇧Z",       "win": "Ctrl+Shift+Z",   "context": "Chat input" },
+  { "id": "claude-013", "cat": "App",        "action": "Open preferences / settings",     "mac": "⌘,",         "win": "Ctrl+,",         "context": "Desktop app" },
+  { "id": "claude-014", "cat": "App",        "action": "New window",                      "mac": "⌘N",         "win": "Ctrl+N",         "context": "Desktop app" },
+  { "id": "claude-015", "cat": "App",        "action": "Close window",                    "mac": "⌘W",         "win": "Ctrl+W",         "context": "Desktop app" },
+  { "id": "claude-016", "cat": "App",        "action": "Quit app",                        "mac": "⌘Q",         "win": "Alt+F4",         "context": "Desktop app" }
+]

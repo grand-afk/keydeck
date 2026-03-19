@@ -16,6 +16,7 @@ export default function TopBar({
   showFavourites,
   toggleShowFavourites,
   keyOverrides = {},
+  pendingPrefix,
   onExport,
   onImport,
   darkMode,
@@ -134,13 +135,21 @@ export default function TopBar({
 
       {/* ── Row 2: app filter chips (all non-hidden apps; keyboard shortcuts toggle them) ── */}
       <div className="app-filters" role="group" aria-label="Filter by app">
+        {/* Prefix indicator — shown while waiting for the second key of a 0-prefix sequence */}
+        {pendingPrefix && (
+          <span className="prefix-indicator" aria-live="polite">
+            <kbd>{pendingPrefix}</kbd>+…
+          </span>
+        )}
+
         <button
           className={`app-chip ${selectedApps.length === 0 ? 'app-chip--active' : ''}`}
           onClick={clearAllApps}
-          title="Show all apps"
+          title="Show all apps [A]"
         >
-          All
+          All<kbd className="kbd-hint">A</kbd>
         </button>
+
         {APPS.filter((a) => !hiddenApps.includes(a.id)).map((app) => {
           const resolved = resolveApp(app)
           // Effective key: custom override if set, otherwise the APPS default

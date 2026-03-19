@@ -1486,6 +1486,119 @@ th:hover .col-hide-btn { opacity: 1; }
   background: var(--border);
 }
 
+/* ── Prefix indicator (shown in chip bar while waiting for 2nd key) ──────── */
+.prefix-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  animation: remap-pulse 0.8s ease-in-out infinite;
+  pointer-events: none;
+}
+.prefix-indicator kbd {
+  background: rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 3px;
+  padding: 0 4px;
+  font-size: 0.7rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: #fff;
+}
+
+/* ── A–Z key picker ──────────────────────────────────────────────────────── */
+.key-picker {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.key-picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+}
+
+.key-picker-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+}
+.key-picker-close:hover { background: var(--border); color: var(--text); }
+
+.key-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  gap: 5px;
+}
+
+.key-picker-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 4px 4px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.key-picker-letter {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.key-picker-sub {
+  font-size: 0.55rem;
+  line-height: 1;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Free slots — accent border, inviting */
+.key-picker-cell--free {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.key-picker-cell--free .key-picker-sub { color: var(--accent); opacity: 0.75; }
+.key-picker-cell--free:hover { background: var(--accent); color: #fff; }
+.key-picker-cell--free:hover .key-picker-sub { color: rgba(255,255,255,0.8); }
+
+/* Taken by another app — dimmed but clickable (steal) */
+.key-picker-cell--taken {
+  opacity: 0.6;
+}
+.key-picker-cell--taken:hover { opacity: 1; border-color: var(--accent); }
+
+/* Reserved system keys — fully disabled */
+.key-picker-cell--reserved {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.key-picker-cell--reserved:hover { background: var(--surface2); }
+
 /* Responsive — 2-column on very small screens */
 @media (max-width: 480px) {
   .settings-app-grid {

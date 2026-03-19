@@ -31,12 +31,22 @@ function resetIOSZoom() {
 export default function App() {
   const [view, setView] = useState('shortcuts')
 
+  // Pending 0-prefix for two-char app shortcuts (e.g. 0M = Meet, 0W = Word)
+  const [pendingPrefix, setPendingPrefix] = useState(null)
+
   // Search overlay state
   const [searchOpen,  setSearchOpen]  = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
   // Flagged modal state
   const [flaggedOpen, setFlaggedOpen] = useState(false)
+
+  // Clear pending prefix after 1.5 s if no second key arrives
+  useEffect(() => {
+    if (!pendingPrefix) return
+    const t = setTimeout(() => setPendingPrefix(null), 1500)
+    return () => clearTimeout(t)
+  }, [pendingPrefix])
 
   const {
     platform, setPlatform,
@@ -96,8 +106,9 @@ export default function App() {
   useEffect(() => {
     function onKey(e) {
       const tag = e.target.tagName
-      // Allow Escape everywhere (to close search/modals)
+      // Allow Escape everywhere (closes search/modals, also cancels pending prefix)
       if (e.key === 'Escape') {
+        if (pendingPrefix) { setPendingPrefix(null); return }
         if (searchOpen) { closeSearch(); return }
         if (flaggedOpen) { setFlaggedOpen(false); return }
         return
@@ -108,31 +119,51 @@ export default function App() {
       // '/' opens search
       if (e.key === '/') { e.preventDefault(); setSearchOpen(true); return }
 
-      // App filter keyboard shortcuts — check overrides first, fall back to APPS default
+      // ── Two-char 0-prefix sequences (e.g. 0M = Meet, 0W = Word) ──────────
+      if (pendingPrefix === '0') {
+        setPendingPrefix(null)
+        const twoKey = '0' + e.key.toUpperCase()
+        const appByTwoKey = APPS.find((a) => {
+          const effectiveKey = keyOverrides[a.id] !== undefined ? keyOverrides[a.id] : (a.key || '')
+          return effectiveKey === twoKey
+        })
+        if (appByTwoKey) { toggleApp(appByTwoKey.id) }
+        // Whether matched or not, second key is consumed — don't fall through
+        return
+      }
+
+      // '0' starts a two-char prefix sequence
+      if (e.key === '0') {
+        e.preventDefault()
+        setPendingPrefix('0')
+        return
+      }
+
+      // ── Single-char app filter shortcuts ──────────────────────────────────
       const appByKey = APPS.find((a) => {
         const effectiveKey = keyOverrides[a.id] !== undefined ? keyOverrides[a.id] : (a.key || '')
-        return effectiveKey && effectiveKey.toUpperCase() === e.key.toUpperCase()
+        // Only match single-char keys here (two-char keys handled above)
+        return effectiveKey.length === 1 && effectiveKey.toUpperCase() === e.key.toUpperCase()
       })
       if (appByKey) { toggleApp(appByKey.id); return }
 
+      // ── System shortcuts ───────────────────────────────────────────────────
       switch (e.key) {
-        // M = Mac platform; W = Win platform
-        // (Desktop/Windows app chip has no default key so W is free for platform switching)
-        case 'm': case 'M': setPlatform('mac'); break
-        case 'w': case 'W': setPlatform('win'); break
+        case 'a': case 'A': setSelectedApps([]); break          // A = All (clear filter)
+        case 'm': case 'M': setPlatform('mac'); break            // M = Mac platform
+        case 'w': case 'W': setPlatform('win'); break            // W = Win platform
         case '1': navigateTo(VIEWS[0]); break
         case '2': navigateTo(VIEWS[1]); break
         case '3': navigateTo(VIEWS[2]); break
         case '4': navigateTo(VIEWS[3]); break
         case '5': navigateTo(VIEWS[4]); break
-        // F = Favourites (uncontested — Teams moved to W)
-        case 'f': case 'F': toggleShowFavourites(); break
+        case 'f': case 'F': toggleShowFavourites(); break        // F = Favourites
         default: break
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [setPlatform, toggleShowFavourites, toggleApp, searchOpen, flaggedOpen, closeSearch, navigateTo, keyOverrides])
+  }, [setPlatform, toggleShowFavourites, toggleApp, setSelectedApps, searchOpen, flaggedOpen, closeSearch, navigateTo, keyOverrides, pendingPrefix])
 
   // Common props shared by all table views
   const tableProps = {
@@ -161,6 +192,7 @@ export default function App() {
         showFavourites={showFavourites}
         toggleShowFavourites={toggleShowFavourites}
         keyOverrides={keyOverrides}
+        pendingPrefix={pendingPrefix}
         onExport={exportData}
         onImport={importData}
         darkMode={darkMode}

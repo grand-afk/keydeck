@@ -62,6 +62,10 @@ export default function HelpView() {
       {/* ── Keyboard shortcuts ── */}
       <section className="settings-section">
         <h3 className="settings-section-title">Keyboard shortcuts</h3>
+        <p className="settings-hint" style={{ marginBottom: '8px' }}>
+          App filter shortcuts starting with <kbd style={{ fontSize: '0.75rem' }}>0</kbd> use a two-key sequence —
+          press <kbd style={{ fontSize: '0.75rem' }}>0</kbd> then the letter. Single-letter shortcuts fire instantly.
+        </p>
         <div className="modal-table-wrapper">
           <table className="help-kbd-table">
             <tbody>
@@ -74,24 +78,35 @@ export default function HelpView() {
               <tr><td><kbd>W</kbd></td><td>Switch to Windows platform</td></tr>
               <tr><td><kbd>F</kbd></td><td>Toggle favourites filter</td></tr>
               <tr><td><kbd>/</kbd></td><td>Open search</td></tr>
-              <tr><td><kbd>Esc</kbd></td><td>Close search / modal</td></tr>
-              <tr><td><kbd>X</kbd></td><td>Toggle Excel filter</td></tr>
-              <tr><td><kbd>P</kbd></td><td>Toggle PowerPoint filter</td></tr>
-              <tr><td><kbd>G</kbd></td><td>Toggle Gmail filter</td></tr>
-              <tr><td><kbd>C</kbd></td><td>Toggle Chat filter</td></tr>
-              <tr><td><kbd>A</kbd></td><td>Toggle Calendar filter</td></tr>
-              <tr><td><kbd>T</kbd></td><td>Toggle Tasks filter</td></tr>
-              <tr><td><kbd>J</kbd></td><td>Toggle Docs filter</td></tr>
-              <tr><td><kbd>H</kbd></td><td>Toggle Sheets filter</td></tr>
-              <tr><td><kbd>D</kbd></td><td>Toggle Drive filter</td></tr>
-              <tr><td><kbd>U</kbd></td><td>Toggle Word filter</td></tr>
-              <tr><td><kbd>N</kbd></td><td>Toggle Desktop filter</td></tr>
-              <tr><td><kbd>Y</kbd></td><td>Toggle PowerToys filter</td></tr>
-              <tr><td><kbd>K</kbd></td><td>Toggle Slack filter</td></tr>
-              <tr><td><kbd>V</kbd></td><td>Toggle Vimium filter</td></tr>
-              <tr><td><kbd>O</kbd></td><td>Toggle Obsidian filter</td></tr>
-              <tr><td><kbd>R</kbd></td><td>Toggle Chrome filter</td></tr>
+              <tr><td><kbd>Esc</kbd></td><td>Close search / modal / cancel prefix</td></tr>
+              <tr><td colSpan={2} style={{ paddingTop: '6px', paddingBottom: '2px', opacity: 0.5, fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>App filters — single key</td></tr>
+              <tr><td><kbd>A</kbd></td><td>Show all (clear filter)</td></tr>
               <tr><td><kbd>B</kbd></td><td>Toggle Bookmarks filter</td></tr>
+              <tr><td><kbd>C</kbd></td><td>Toggle Chat filter</td></tr>
+              <tr><td><kbd>D</kbd></td><td>Toggle Drive filter</td></tr>
+              <tr><td><kbd>G</kbd></td><td>Toggle Gmail filter</td></tr>
+              <tr><td><kbd>K</kbd></td><td>Toggle Keep filter</td></tr>
+              <tr><td><kbd>L</kbd></td><td>Toggle Slack filter</td></tr>
+              <tr><td><kbd>N</kbd></td><td>Toggle NotebookLM filter</td></tr>
+              <tr><td><kbd>O</kbd></td><td>Toggle Outlook filter</td></tr>
+              <tr><td><kbd>P</kbd></td><td>Toggle PowerPoint filter</td></tr>
+              <tr><td><kbd>R</kbd></td><td>Toggle Chrome filter</td></tr>
+              <tr><td><kbd>S</kbd></td><td>Toggle Sheets filter</td></tr>
+              <tr><td><kbd>T</kbd></td><td>Toggle Tasks filter</td></tr>
+              <tr><td><kbd>U</kbd></td><td>Toggle Claude filter</td></tr>
+              <tr><td><kbd>V</kbd></td><td>Toggle Vimium filter</td></tr>
+              <tr><td><kbd>X</kbd></td><td>Toggle Excel filter</td></tr>
+              <tr><td><kbd>Z</kbd></td><td>Toggle Desktop filter</td></tr>
+              <tr><td colSpan={2} style={{ paddingTop: '6px', paddingBottom: '2px', opacity: 0.5, fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>App filters — press 0, then…</td></tr>
+              <tr><td><kbd>0</kbd><kbd>C</kbd></td><td>Toggle Calendar filter</td></tr>
+              <tr><td><kbd>0</kbd><kbd>D</kbd></td><td>Toggle Docs filter</td></tr>
+              <tr><td><kbd>0</kbd><kbd>G</kbd></td><td>Toggle Gemini filter</td></tr>
+              <tr><td><kbd>0</kbd><kbd>M</kbd></td><td>Toggle Meet filter</td></tr>
+              <tr><td><kbd>0</kbd><kbd>O</kbd></td><td>Toggle Obsidian filter</td></tr>
+              <tr><td><kbd>0</kbd><kbd>P</kbd></td><td>Toggle PowerToys filter</td></tr>
+              <tr><td><kbd>0</kbd><kbd>S</kbd></td><td>Toggle Slides filter</td></tr>
+              <tr><td><kbd>0</kbd><kbd>T</kbd></td><td>Toggle Teams filter</td></tr>
+              <tr><td><kbd>0</kbd><kbd>W</kbd></td><td>Toggle Word filter</td></tr>
             </tbody>
           </table>
         </div>
@@ -124,6 +139,7 @@ export default function HelpView() {
           <li>🌐 <strong>Vimium</strong> — browser navigation, tabs, link hints, find mode</li>
           <li>🔮 <strong>Obsidian</strong> — notes, editor, search, layout</li>
           <li>🌐 <strong>Chrome</strong> — tabs, navigation, bookmarks, developer tools</li>
+          <li>🤖 <strong>Claude</strong> — compose, send, edit, format, navigation</li>
           <li>🔖 <strong>Bookmarks</strong> — your custom shortcuts</li>
         </ul>
       </section>

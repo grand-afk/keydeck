@@ -2,9 +2,12 @@ import { useState, useEffect } from 'react'
 import { APPS } from '../data/index'
 import AppIcon from './AppIcon'
 
-// Keys that are reserved for system-level shortcuts and cannot be remapped
-const RESERVED_KEYS = new Set(['M', 'F', '/', '1', '2', '3', '4', '5'])
-const RESERVED_LABEL = 'M (Mac platform), F (Favourites), / (Search), 1–5 (tabs)'
+// Letters reserved for system-level shortcuts — cannot be assigned to app chips
+// A = All filter, M = Mac platform, W = Win platform, F = Favourites
+const RESERVED_KEYS  = new Set(['A', 'M', 'W', 'F'])
+const RESERVED_LABEL = 'A (All), M (Mac), W (Win), F (Favourites)'
+
+const ALL_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 export default function SettingsView({
   hiddenApps,
@@ -26,7 +29,7 @@ export default function SettingsView({
   // ── Key remapping state ─────────────────────────────────────────────────
   const [remappingId, setRemappingId] = useState(null)
 
-  // Capture the next keypress when in remap mode
+  // Keyboard shortcut for the picker: pressing a letter while grid is open assigns it
   useEffect(() => {
     if (!remappingId) return
 
@@ -36,30 +39,16 @@ export default function SettingsView({
       const key = e.key.toUpperCase()
 
       if (e.key === 'Escape') { setRemappingId(null); return }
-
-      // Single A–Z letters only; reject reserved keys
-      if (!/^[A-Z]$/.test(key)) return   // ignore Shift, Enter, etc. without cancelling
-      if (RESERVED_KEYS.has(key)) {
-        setRemappingId(null)
-        return
-      }
+      if (!/^[A-Z]$/.test(key)) return
+      if (RESERVED_KEYS.has(key)) return   // silently ignore; grid cell is also disabled
 
       setKeyOverride(remappingId, key)
       setRemappingId(null)
     }
 
-    // capture: true ensures this fires before the global App.jsx handler
     window.addEventListener('keydown', handleKey, { capture: true })
     return () => window.removeEventListener('keydown', handleKey, { capture: true })
   }, [remappingId, setKeyOverride])
-
-  // Click anywhere outside to cancel remap
-  useEffect(() => {
-    if (!remappingId) return
-    function handleClick() { setRemappingId(null) }
-    window.addEventListener('click', handleClick)
-    return () => window.removeEventListener('click', handleClick)
-  }, [remappingId])
 
   return (
     <div className="settings-view">
@@ -111,10 +100,14 @@ export default function SettingsView({
       <section className="settings-section">
         <h3 className="settings-section-title">App keyboard shortcuts</h3>
         <p className="settings-hint">
-          Each filter chip has a single-key shortcut. Click a key badge to remap it,
-          then press your chosen letter. Reserved (cannot be remapped): {RESERVED_LABEL}.
+          Each filter chip has a keyboard shortcut. Single letters toggle that app instantly;
+          shortcuts starting with <kbd style={{ fontSize: '0.75rem' }}>0</kbd> use a two-key sequence
+          (press <kbd style={{ fontSize: '0.75rem' }}>0</kbd> then the letter).
+          Click a badge to reassign it — the picker shows which letters are free.
+          Reserved: {RESERVED_LABEL}.
         </p>
 
+        {/* Per-app key rows */}
         <div className="key-remap-grid">
           {filterableApps.map((app) => {
             const defaultKey   = app.key || ''
@@ -122,7 +115,7 @@ export default function SettingsView({
               ? keyOverrides[app.id]
               : defaultKey
             const isCustom     = keyOverrides[app.id] !== undefined
-            const isListening  = remappingId === app.id
+            const isOpen       = remappingId === app.id
 
             return (
               <div key={app.id} className="key-remap-row">
@@ -132,23 +125,19 @@ export default function SettingsView({
                 <button
                   className={[
                     'key-remap-btn',
-                    isListening ? 'key-remap-btn--listening' : '',
-                    isCustom && !isListening ? 'key-remap-btn--custom' : '',
+                    isOpen    ? 'key-remap-btn--listening' : '',
+                    isCustom && !isOpen ? 'key-remap-btn--custom' : '',
                   ].filter(Boolean).join(' ')}
                   onClick={(e) => {
                     e.stopPropagation()
-                    setRemappingId(isListening ? null : app.id)
+                    setRemappingId(isOpen ? null : app.id)
                   }}
-                  title={
-                    isListening
-                      ? 'Press a letter key… (Esc to cancel)'
-                      : `${effectiveKey || '—'} · Click to remap`
-                  }
+                  title={isOpen ? 'Pick a letter below (Esc to cancel)' : `${effectiveKey || '—'} · Click to remap`}
                 >
-                  {isListening ? '?' : (effectiveKey || '—')}
+                  {effectiveKey || '—'}
                 </button>
 
-                {isCustom && !isListening && (
+                {isCustom && !isOpen && (
                   <button
                     className="key-remap-reset"
                     onClick={(e) => { e.stopPropagation(); resetKeyOverride(app.id) }}
@@ -162,6 +151,59 @@ export default function SettingsView({
             )
           })}
         </div>
+
+        {/* A–Z letter picker — appears when a row is open */}
+        {remappingId && (() => {
+          const remappingApp = filterableApps.find((a) => a.id === remappingId)
+          return (
+            <div className="key-picker">
+              <div className="key-picker-header">
+                <span>Pick a key for <strong>{remappingApp?.label}</strong></span>
+                <button className="key-picker-close" onClick={() => setRemappingId(null)} aria-label="Cancel">✕</button>
+              </div>
+              <div className="key-picker-grid">
+                {ALL_LETTERS.map((letter) => {
+                  const isReserved = RESERVED_KEYS.has(letter)
+                  // Which app currently holds this single letter (override or default)?
+                  const takenBy = filterableApps.find((a) => {
+                    if (a.id === remappingId) return false
+                    const ek = keyOverrides[a.id] !== undefined ? keyOverrides[a.id] : (a.key || '')
+                    return ek === letter   // single-char match only
+                  })
+                  const isFree = !isReserved && !takenBy
+
+                  return (
+                    <button
+                      key={letter}
+                      className={[
+                        'key-picker-cell',
+                        isReserved ? 'key-picker-cell--reserved' : '',
+                        takenBy    ? 'key-picker-cell--taken'    : '',
+                        isFree     ? 'key-picker-cell--free'     : '',
+                      ].filter(Boolean).join(' ')}
+                      disabled={isReserved}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setKeyOverride(remappingId, letter)
+                        setRemappingId(null)
+                      }}
+                      title={
+                        isReserved ? `Reserved system key`
+                        : takenBy  ? `Steal from ${takenBy.label}`
+                        : `Assign ${letter}`
+                      }
+                    >
+                      <span className="key-picker-letter">{letter}</span>
+                      <span className="key-picker-sub">
+                        {isReserved ? 'system' : takenBy ? takenBy.label.slice(0, 6) : 'free'}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })()}
       </section>
 
       {/* ── Preferences ───────────────────────────────────────── */}

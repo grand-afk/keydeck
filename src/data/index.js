@@ -21,6 +21,7 @@ import slack        from './slack.json'
 import vimium       from './vimium.json'
 import obsidian     from './obsidian.json'
 import chrome       from './chrome.json'
+import claude       from './claude.json'
 import custom       from './custom.json'
 
 // ─── Icon helpers ───────────────────────────────────────────────────────────
@@ -40,34 +41,38 @@ const GEMINI_ICON =
 // ─── App metadata ───────────────────────────────────────────────────────────
 export const APPS = [
   // ── Google Workspace ──────────────────────────────────────────────────────
-  { id: 'gmail',           iconUrl: GWS('gmail_2020q4/v11'),          icon: '📧', label: 'Gmail',       key: 'G' },
-  { id: 'google-meet',     iconUrl: GWS('meet_2020q4/v8'),            icon: '📹', label: 'Meet',        key: 'Z' },
-  { id: 'google-chat',     iconUrl: GWS('chat_2023q4/v2'),            icon: '💬', label: 'Chat',        key: 'C' },
-  { id: 'google-calendar', iconUrl: GWS('calendar_2020q4/v13'),       icon: '📅', label: 'Calendar',    key: 'A' },
-  { id: 'google-drive',    iconUrl: GWS('drive_2020q4/v10'),          icon: '💾', label: 'Drive',       key: 'D' },
-  { id: 'google-docs',     iconUrl: GWS('docs_2020q4/v12'),           icon: '📄', label: 'Docs',        key: 'J' },
-  { id: 'google-sheets',   iconUrl: GWS('sheets_2020q4/v11'),         icon: '📊', label: 'Sheets',      key: 'H' },
-  { id: 'google-slides',   iconUrl: GWS('slides_2020q4/v12'),         icon: '📽️', label: 'Slides',      key: 'S' },
-  { id: 'google-tasks',    iconUrl: GWS('tasks/v10'),                 icon: '✅', label: 'Tasks',       key: 'T' },
-  { id: 'google-keep',     iconUrl: GWS('keep_2020q4/v8'),            icon: '🟡', label: 'Keep',        key: 'E' },
-  { id: 'gemini',          iconUrl: GEMINI_ICON,                      icon: '✨', label: 'Gemini',      key: 'I' },
-  { id: 'notebooklm',      iconUrl: GWS('notebooklm/v1'),             icon: '📓', label: 'NotebookLM',  key: 'L' },
+  // Single-char: first letter of label (G, C, D, S, T, K, N)
+  // Two-char 0-prefix: where first letter conflicts (0M=Meet, 0C=Calendar, 0D=Docs, 0G=Gemini, 0S=Slides)
+  { id: 'gmail',           iconUrl: GWS('gmail_2020q4/v11'),          icon: '📧', label: 'Gmail',       key: 'G'  },
+  { id: 'google-meet',     iconUrl: GWS('meet_2020q4/v8'),            icon: '📹', label: 'Meet',        key: '0M' },  // M = Mac platform
+  { id: 'google-chat',     iconUrl: GWS('chat_2023q4/v2'),            icon: '💬', label: 'Chat',        key: 'C'  },
+  { id: 'google-calendar', iconUrl: GWS('calendar_2020q4/v13'),       icon: '📅', label: 'Calendar',    key: '0C' },  // C = Chat
+  { id: 'google-drive',    iconUrl: GWS('drive_2020q4/v10'),          icon: '💾', label: 'Drive',       key: 'D'  },
+  { id: 'google-docs',     iconUrl: GWS('docs_2020q4/v12'),           icon: '📄', label: 'Docs',        key: '0D' },  // D = Drive
+  { id: 'google-sheets',   iconUrl: GWS('sheets_2020q4/v11'),         icon: '📊', label: 'Sheets',      key: 'S'  },
+  { id: 'google-slides',   iconUrl: GWS('slides_2020q4/v12'),         icon: '📽️', label: 'Slides',      key: '0S' },  // S = Sheets
+  { id: 'google-tasks',    iconUrl: GWS('tasks/v10'),                 icon: '✅', label: 'Tasks',       key: 'T'  },
+  { id: 'google-keep',     iconUrl: GWS('keep_2020q4/v8'),            icon: '🟡', label: 'Keep',        key: 'K'  },
+  { id: 'gemini',          iconUrl: GEMINI_ICON,                      icon: '✨', label: 'Gemini',      key: '0G' },  // G = Gmail
+  { id: 'notebooklm',      iconUrl: GWS('notebooklm/v1'),             icon: '📓', label: 'NotebookLM',  key: 'N'  },
 
   // ── Microsoft 365 ─────────────────────────────────────────────────────────
-  { id: 'excel',           iconUrl: MS('excel'),                      icon: '📗', label: 'Excel',       key: 'X' },
-  { id: 'powerpoint',      iconUrl: MS('powerpoint'),                 icon: '📕', label: 'PowerPoint',  key: 'P' },
-  { id: 'word',            iconUrl: MS('word'),                       icon: '📘', label: 'Word',        key: 'U' },
-  { id: 'outlook',         iconUrl: MS('outlook'),                    icon: '📨', label: 'Outlook',     key: 'Q' },
-  { id: 'teams',           iconUrl: MS('teams'),                      icon: '👥', label: 'Teams',       key: 'B' },
+  // Single-char: P, X (kept); two-char 0-prefix: 0W=Word (W=Win platform), 0T=Teams (T=Tasks), 0P=PowerToys (P=PowerPoint)
+  { id: 'excel',           iconUrl: MS('excel'),                      icon: '📗', label: 'Excel',       key: 'X'  },  // kept X
+  { id: 'powerpoint',      iconUrl: MS('powerpoint'),                 icon: '📕', label: 'PowerPoint',  key: 'P'  },
+  { id: 'word',            iconUrl: MS('word'),                       icon: '📘', label: 'Word',        key: '0W' },  // W = Win platform
+  { id: 'outlook',         iconUrl: MS('outlook'),                    icon: '📨', label: 'Outlook',     key: 'O'  },
+  { id: 'teams',           iconUrl: MS('teams'),                      icon: '👥', label: 'Teams',       key: '0T' },  // T = Tasks
 
   // ── Other apps ────────────────────────────────────────────────────────────
-  { id: 'windows',         iconUrl: MS('windows'),                    icon: '🪟', label: 'Desktop'            },
-  { id: 'powertoys',       icon: '⚙️',                                            label: 'PowerToys',   key: 'Y' },
-  { id: 'slack',           iconUrl: GWS('slack.com'),                 icon: '💼', label: 'Slack',       key: 'K' },
-  { id: 'vimium',          icon: '🌐',                                            label: 'Vimium',      key: 'V' },
-  { id: 'obsidian',        iconUrl: 'https://www.google.com/s2/favicons?domain=obsidian.md&sz=128', icon: '🔮', label: 'Obsidian', key: 'O' },
-  { id: 'chrome',          iconUrl: 'https://www.google.com/s2/favicons?domain=google.com/chrome&sz=128', icon: '🌐', label: 'Chrome', key: 'R' },
-  { id: 'custom',          icon: '🔖',                                            label: 'Bookmarks',   key: 'N' },
+  { id: 'windows',         iconUrl: MS('windows'),                    icon: '🪟', label: 'Desktop',     key: 'Z'  },
+  { id: 'powertoys',       icon: '⚙️',                                            label: 'PowerToys',   key: '0P' },  // P = PowerPoint
+  { id: 'slack',           iconUrl: GWS('slack.com'),                 icon: '💼', label: 'Slack',       key: 'L'  },  // sLack
+  { id: 'vimium',          icon: '🌐',                                            label: 'Vimium',      key: 'V'  },
+  { id: 'obsidian',        iconUrl: 'https://www.google.com/s2/favicons?domain=obsidian.md&sz=128', icon: '🔮', label: 'Obsidian', key: '0O' },  // O = Outlook
+  { id: 'chrome',          iconUrl: 'https://www.google.com/s2/favicons?domain=google.com/chrome&sz=128', icon: '🌐', label: 'Chrome', key: 'R' },  // chRome
+  { id: 'claude',          iconUrl: 'https://www.google.com/s2/favicons?domain=claude.ai&sz=128', icon: '🤖', label: 'Claude',      key: 'U'  },
+  { id: 'custom',          icon: '🔖',                                            label: 'Bookmarks',   key: 'B'  },
 ]
 
 // ─── Tag each shortcut with its app id ─────────────────────────────────────
@@ -97,6 +102,7 @@ const ALL_SHORTCUTS = [
   ...tag('vimium',           vimium),
   ...tag('obsidian',         obsidian),
   ...tag('chrome',           chrome),
+  ...tag('claude',           claude),
   ...tag('custom',           custom),
 ]
 
