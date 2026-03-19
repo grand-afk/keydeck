@@ -141,7 +141,10 @@ body {
 }
 
 .app-chip:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }
-.app-chip--active { background: var(--accent); border-color: var(--accent); color: #fff; }
+/* Active wins over hover (same specificity, later in sheet).
+   :hover variant handles iOS sticky-hover after tap. */
+.app-chip--active,
+.app-chip--active:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
 /* ✕ remove button inside active chips */
 .app-chip__remove {
@@ -1016,8 +1019,15 @@ select.form-input {
 :root.light .icon-btn:hover { background: var(--surface2); color: var(--text); }
 :root.light .app-chip               { border-color: var(--border); color: var(--text-muted); }
 :root.light .app-chip:hover         { background: var(--surface2); color: var(--text); }
+/* Active chip: override the hover rule (which sets pale surface2 bg) with the full accent colour.
+   Same specificity (0,3,0) but later in the sheet so it wins.
+   The :hover variant handles iOS "sticky hover" that persists after a tap. */
 :root.light .app-chip--active,
-:root.light .app-chip--active:hover { color: #fff; }                 /* keep white text on accent bg */
+:root.light .app-chip--active:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
 :root.light .app-chip--active .kbd-hint { color: #fff; border-color: rgba(255,255,255,0.5); }  /* kbd inside active chip */
 :root.light .platform-btn                   { color: var(--text-muted); }
 :root.light .platform-btn--active           { color: #fff; }         /* Mac/Win active = white text */
