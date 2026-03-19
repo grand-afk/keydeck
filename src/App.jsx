@@ -118,7 +118,7 @@ export default function App() {
       switch (e.key) {
         // M = Mac platform (uncontested — Meet moved to Z)
         case 'm': case 'M': setPlatform('mac'); break
-        // W removed: Teams now uses W as its app key
+        // W removed: Desktop app now uses W as its chip key
         // Win platform has no keyboard shortcut; use the button in TopBar or Settings
         case '1': navigateTo(VIEWS[0]); break
         case '2': navigateTo(VIEWS[1]); break

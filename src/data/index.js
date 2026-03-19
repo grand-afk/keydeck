@@ -25,46 +25,49 @@ import custom       from './custom.json'
 
 // ─── Icon helpers ───────────────────────────────────────────────────────────
 // Microsoft Office / 365 product icons — PNG from the Office brand CDN
-// (PNG avoids SVG wordmark text nodes that caused the "Excel Excel" double-name bug)
 const MS = (name) =>
   `https://res.cdn.office.net/assets/brand-icons/product/png/${name}_48x1.png`
 
-// Google Workspace product icons — served by Google's favicon API at 128 px
-// (higher res than the 64 px we used before; Google keeps these up to date)
-const GWS = (domain) =>
-  `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+// Google Workspace product icons — SVGs served directly from Google's brand CDN
+// URLs sourced live from workspace.google.com/intl/en_uk/features/
+const GWS = (slug) =>
+  `https://www.gstatic.com/images/branding/productlogos/${slug}/192px.svg`
+
+// Gemini has a different URL structure (PNG, not SVG)
+const GEMINI_ICON =
+  'https://www.gstatic.com/images/branding/productlogos/gemini_2025/v1/web-96dp/logo_gemini_2025_color_2x_web_96dp.png'
 
 // ─── App metadata ───────────────────────────────────────────────────────────
 export const APPS = [
   // ── Google Workspace ──────────────────────────────────────────────────────
-  { id: 'gmail',           iconUrl: GWS('mail.google.com'),          icon: '📧', label: 'Gmail',       key: 'G' },
-  { id: 'google-meet',     iconUrl: GWS('meet.google.com'),          icon: '📹', label: 'Meet',        key: 'Z' },
-  { id: 'google-chat',     iconUrl: GWS('chat.google.com'),          icon: '💬', label: 'Chat',        key: 'C' },
-  { id: 'google-calendar', iconUrl: GWS('calendar.google.com'),      icon: '📅', label: 'Calendar',    key: 'A' },
-  { id: 'google-drive',    iconUrl: GWS('drive.google.com'),         icon: '💾', label: 'Drive',       key: 'D' },
-  { id: 'google-docs',     iconUrl: GWS('docs.google.com'),          icon: '📄', label: 'Docs',        key: 'J' },
-  { id: 'google-sheets',   iconUrl: GWS('sheets.google.com'),        icon: '📊', label: 'Sheets',      key: 'H' },
-  { id: 'google-slides',   iconUrl: GWS('slides.google.com'),        icon: '📽️', label: 'Slides',      key: 'S' },
-  { id: 'google-tasks',    iconUrl: GWS('tasks.google.com'),         icon: '✅', label: 'Tasks',       key: 'T' },
-  { id: 'google-keep',     iconUrl: GWS('keep.google.com'),          icon: '🟡', label: 'Keep',        key: 'E' },
-  { id: 'gemini',          iconUrl: GWS('gemini.google.com'),        icon: '✨', label: 'Gemini',      key: 'I' },
-  { id: 'notebooklm',      iconUrl: GWS('notebooklm.google.com'),    icon: '📓', label: 'NotebookLM',  key: 'L' },
+  { id: 'gmail',           iconUrl: GWS('gmail_2020q4/v11'),          icon: '📧', label: 'Gmail',       key: 'G' },
+  { id: 'google-meet',     iconUrl: GWS('meet_2020q4/v8'),            icon: '📹', label: 'Meet',        key: 'Z' },
+  { id: 'google-chat',     iconUrl: GWS('chat_2023q4/v2'),            icon: '💬', label: 'Chat',        key: 'C' },
+  { id: 'google-calendar', iconUrl: GWS('calendar_2020q4/v13'),       icon: '📅', label: 'Calendar',    key: 'A' },
+  { id: 'google-drive',    iconUrl: GWS('drive_2020q4/v10'),          icon: '💾', label: 'Drive',       key: 'D' },
+  { id: 'google-docs',     iconUrl: GWS('docs_2020q4/v12'),           icon: '📄', label: 'Docs',        key: 'J' },
+  { id: 'google-sheets',   iconUrl: GWS('sheets_2020q4/v11'),         icon: '📊', label: 'Sheets',      key: 'H' },
+  { id: 'google-slides',   iconUrl: GWS('slides_2020q4/v12'),         icon: '📽️', label: 'Slides',      key: 'S' },
+  { id: 'google-tasks',    iconUrl: GWS('tasks/v10'),                 icon: '✅', label: 'Tasks',       key: 'T' },
+  { id: 'google-keep',     iconUrl: GWS('keep_2020q4/v8'),            icon: '🟡', label: 'Keep',        key: 'E' },
+  { id: 'gemini',          iconUrl: GEMINI_ICON,                      icon: '✨', label: 'Gemini',      key: 'I' },
+  { id: 'notebooklm',      iconUrl: GWS('notebooklm/v1'),             icon: '📓', label: 'NotebookLM',  key: 'L' },
 
   // ── Microsoft 365 ─────────────────────────────────────────────────────────
   { id: 'excel',           iconUrl: MS('excel'),                      icon: '📗', label: 'Excel',       key: 'X' },
   { id: 'powerpoint',      iconUrl: MS('powerpoint'),                 icon: '📕', label: 'PowerPoint',  key: 'P' },
   { id: 'word',            iconUrl: MS('word'),                       icon: '📘', label: 'Word',        key: 'U' },
   { id: 'outlook',         iconUrl: MS('outlook'),                    icon: '📨', label: 'Outlook',     key: 'Q' },
-  { id: 'teams',           iconUrl: MS('teams'),                      icon: '👥', label: 'Teams',       key: 'W' },
+  { id: 'teams',           iconUrl: MS('teams'),                      icon: '👥', label: 'Teams',       key: 'B' },
 
   // ── Other apps ────────────────────────────────────────────────────────────
-  { id: 'windows',         iconUrl: GWS('microsoft.com'),             icon: '🪟', label: 'Desktop',     key: 'N' },
+  { id: 'windows',         iconUrl: MS('windows'),                    icon: '🪟', label: 'Desktop',     key: 'W' },
   { id: 'powertoys',       icon: '⚙️',                                            label: 'PowerToys',   key: 'Y' },
   { id: 'slack',           iconUrl: GWS('slack.com'),                 icon: '💼', label: 'Slack',       key: 'K' },
   { id: 'vimium',          icon: '🌐',                                            label: 'Vimium',      key: 'V' },
-  { id: 'obsidian',        iconUrl: GWS('obsidian.md'),               icon: '🔮', label: 'Obsidian',    key: 'O' },
-  { id: 'chrome',          iconUrl: GWS('google.com/chrome'),         icon: '🌐', label: 'Chrome',      key: 'R' },
-  { id: 'custom',          icon: '🔖',                                            label: 'Bookmarks',   key: 'B' },
+  { id: 'obsidian',        iconUrl: 'https://www.google.com/s2/favicons?domain=obsidian.md&sz=128', icon: '🔮', label: 'Obsidian', key: 'O' },
+  { id: 'chrome',          iconUrl: 'https://www.google.com/s2/favicons?domain=google.com/chrome&sz=128', icon: '🌐', label: 'Chrome', key: 'R' },
+  { id: 'custom',          icon: '🔖',                                            label: 'Bookmarks',   key: 'N' },
 ]
 
 // ─── Tag each shortcut with its app id ─────────────────────────────────────

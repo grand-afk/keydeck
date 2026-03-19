@@ -64,32 +64,43 @@ export function useSettings() {
 
   const setPlatform = useCallback((p) => update({ platform: p }), [update])
 
-  const toggleApp = useCallback(
-    (appId) => update({
-      selectedApps: selectedApps.includes(appId)
-        ? selectedApps.filter((a) => a !== appId)
-        : [...selectedApps, appId],
-    }),
-    [selectedApps, update],
-  )
+  // Use functional setSettings to avoid stale-closure bugs on mobile (iOS touch events
+  // can fire callbacks before React has flushed the previous state update).
+  const toggleApp = useCallback((appId) => {
+    setSettings((prev) => {
+      const current = prev.selectedApps ?? []
+      const next = {
+        ...prev,
+        selectedApps: current.includes(appId)
+          ? current.filter((a) => a !== appId)
+          : [...current, appId],
+      }
+      saveSettings(next)
+      return next
+    })
+  }, []) // stable — no closure over selectedApps needed
 
-  const setSelectedApps = useCallback(
-    (apps) => update({ selectedApps: apps }),
-    [update],
-  )
+  const setSelectedApps = useCallback((apps) => {
+    setSettings((prev) => {
+      const next = { ...prev, selectedApps: apps }
+      saveSettings(next)
+      return next
+    })
+  }, []) // stable
 
   // toggleHideApp: permanently remove/restore an app from the chip row + shortcuts.
   // Also removes the app from selectedApps so a hidden app can never be an active filter.
-  const toggleHideApp = useCallback(
-    (appId) => {
-      const newHidden = hiddenApps.includes(appId)
-        ? hiddenApps.filter((a) => a !== appId)
-        : [...hiddenApps, appId]
-      const newSelected = selectedApps.filter((a) => !newHidden.includes(a))
-      update({ hiddenApps: newHidden, selectedApps: newSelected })
-    },
-    [hiddenApps, selectedApps, update],
-  )
+  const toggleHideApp = useCallback((appId) => {
+    setSettings((prev) => {
+      const hidden   = prev.hiddenApps   ?? []
+      const selected = prev.selectedApps ?? []
+      const newHidden   = hidden.includes(appId) ? hidden.filter((a) => a !== appId) : [...hidden, appId]
+      const newSelected = selected.filter((a) => !newHidden.includes(a))
+      const next = { ...prev, hiddenApps: newHidden, selectedApps: newSelected }
+      saveSettings(next)
+      return next
+    })
+  }, []) // stable
 
   const toggleShowFavourites = useCallback(
     () => update({ showFavourites: !showFavourites }),
