@@ -1070,6 +1070,16 @@ html, body { overflow-x: hidden; }
   .study-cell--cat, .study-table thead th:nth-child(2) { display: none; }
 }
 
+/* Touch devices: neutralise the "sticky hover" state that lingers on inactive
+   app chips after a tap — reset to the same appearance as the resting state. */
+@media (hover: none) and (pointer: coarse) {
+  .app-chip:not(.app-chip--active):hover {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text-muted);
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    INLINE SEARCH BAR (TopBar Row 3)
 ═══════════════════════════════════════════════════════════════════════════ */
